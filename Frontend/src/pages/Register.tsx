@@ -37,6 +37,28 @@ const Register = () => {
             />
           </div>
 
+          <div className="flex flex-col ">
+            <label
+              htmlFor="reclutador"
+              className="text-gray-600 font-bold uppercase text-xs mb-1"
+            >
+              Tipo de Cuenta
+            </label>
+            <select
+              name="reclutador"
+              id="reclutador"
+              className="border border-gray-300 p-1 rounded"
+            >
+              <option>-- Selecciona una opcion --</option>
+              <option value="1">
+                Reclutador -- Podras Crear Vacantes de Trabajo
+              </option>
+              <option value="0">
+                Postulante -- Podras Postularte a las Vacantes
+              </option>
+            </select>
+          </div>
+
           <div className="flex flex-col">
             <label
               htmlFor="email"

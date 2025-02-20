@@ -17,6 +17,12 @@ import Valores from "./pages/micvroutes/Valores";
 import Hitos from "./pages/micvroutes/Hitos";
 import Idiomas from "./pages/micvroutes/Idiomas";
 import Notificaciones from "./pages/Notificaciones";
+import MisVacantes from "./pages/reclutador/MisVacantes";
+import MisPostulaciones from "./pages/MisPostulacione";
+import GuardarVacante from "./pages/reclutador/GuardarVacante";
+import Candidatos from "./pages/reclutador/Candidatos";
+import Requisitos from "./pages/reclutador/Requisitos";
+import Candidato from "./pages/reclutador/Candidato";
 
 const Router = () => {
   return (
@@ -25,6 +31,17 @@ const Router = () => {
         <Route path="/" element={<PrincipalLayout />}>
           <Route index element={<Inicio />} />
           <Route path="notifications" element={<Notificaciones />} />
+          <Route path="applications" element={<MisPostulaciones />} />
+          <Route path="vacancy" element={<MisVacantes />} />
+          <Route path="vacancy/:id" element={<MisVacantes />} />
+          <Route path="vacancy/:id/requirements" element={<Requisitos />} />
+          <Route path="vacancy/:id/applicants" element={<Candidatos />} />
+          <Route
+            path="vacancy/:id/applicants/:aplicantId"
+            element={<Candidato />}
+          />
+          <Route path="vacancy/create-vacancy" element={<GuardarVacante />} />
+          <Route path="vacancy/:id/edit" element={<GuardarVacante />} />
           <Route path="user" element={<UsuarioLayout />}>
             <Route index element={<Usuario />} />
             <Route path="dir" element={<Direccion />} />

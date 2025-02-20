@@ -1,7 +1,10 @@
 import { Link } from "react-router";
 import Logo from "./Logo";
+import useReJobsContext from "../hooks/useReJobsContext";
+import { IRejobsContext } from "../context/ReJobsProvider";
 
 const Header = () => {
+  const { modalView, setModalView } = useReJobsContext() as IRejobsContext;
   return (
     <header className="flex md:flex-row flex-col p-4 bg-white justify-between items-center">
       <Link to={"/"} className="flex items-center">
@@ -19,12 +22,18 @@ const Header = () => {
         <Link to={"/cv"} className="hover:underline">
           Mi CV
         </Link>
-        <Link to={""} className="hover:underline">
+        <Link to={"/applications"} className="hover:underline">
           Mis Postulaciones
         </Link>
-        <Link to={""} className="hover:underline">
-          Cerrar Sesión
+        <Link to={"/vacancy"} className="hover:underline">
+          Mis Vacantes
         </Link>
+        <button
+          onClick={() => setModalView(!modalView)}
+          className="hover:underline cursor-pointer"
+        >
+          Cerrar Sesión
+        </button>
       </nav>
     </header>
   );
