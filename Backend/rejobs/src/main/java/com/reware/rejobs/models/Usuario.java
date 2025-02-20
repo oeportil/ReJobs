@@ -50,7 +50,7 @@ public class Usuario {
     // Constructores
     public Usuario() {}
     
-    public Usuario(Integer id, String nombre, String apellido, String email, String password, String telefono, String pfp, Boolean reclutador) {
+    public Usuario(Integer id, String nombre, String apellido, String email, String password, String telefono, String pfp, Boolean reclutador, Curriculum curriculum) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -59,9 +59,10 @@ public class Usuario {
         this.telefono = telefono;
         this.pfp = pfp;
         this.reclutador = reclutador;
+        this.curriculum = curriculum;
     }
     
-    public Usuario(String nombre, String apellido, String email, String password, String telefono, String pfp, Boolean reclutador) {
+    public Usuario(String nombre, String apellido, String email, String password, String telefono, String pfp, Boolean reclutador, Curriculum curriculum) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -69,6 +70,7 @@ public class Usuario {
         this.telefono = telefono;
         this.pfp = pfp;
         this.reclutador = reclutador;
+        this.curriculum = curriculum;
     }
     
     // Getters y Setters
