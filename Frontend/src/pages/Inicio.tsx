@@ -4,7 +4,7 @@ const Inicio = () => {
   return (
     <>
       <div className="max-w-3xl mx-auto my-4 bg-[url(../../public/img/banner.jpg)]">
-        <h2 className="text-center text-slate-700 font-bold text-xl ">
+        <h2 className="text-center text-slate-700 font-bold text-2xl ">
           Encuentra el trabajo de tu Sueños
         </h2>
         <form action="" className=" mt-2 md:w-auto w-11/12 mx-auto">

@@ -8,7 +8,7 @@ const VacanteCard = () => {
       className="hover:shadow-md shadow-slate-400 bg-white p-4 rounded"
     >
       {/* Nombre de la vacante */}
-      <h3 className="text-xl font-bold">Desarrollador de React y Laravel</h3>
+      <h3 className="text-lg font-bold">Desarrollador de React y Laravel</h3>
       {/* Nombre de la empresa */}
       <p className="uppercase text-sm text-slate-600 font-bold">
         Reware Studios

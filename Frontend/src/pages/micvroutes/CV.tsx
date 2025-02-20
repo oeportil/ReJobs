@@ -5,33 +5,33 @@ const CV = () => {
       <h2 className="text-4xl font-bold text-slate-800">
         Crea o Edita tu Curriculum Vitae
       </h2>
-      <form action="" className="space-y-4 my-5 p-2">
-        <div className="flex flex-col">
+      <form action="" className="space-y-4 my-5 p-4">
+        <div className="flex flex-col ">
           <label
-            htmlFor="email"
-            className="text-gray-600 font-bold uppercase text-xs mb-1 "
+            htmlFor="descripcion"
+            className="text-gray-600 font-bold uppercase text-xs mb-1"
           >
-            Email
+            Descripción
           </label>
-          <input
-            type="email"
-            name="email"
-            className="border border-gray-300 p-1 rounded bg-white"
-          />
+          <textarea
+            name="descripcion"
+            id="descripcion"
+            className="border border-gray-300 p-1 rounded bg-white h-20"
+          ></textarea>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <label
-            htmlFor="password"
-            className="text-gray-600 font-bold uppercase text-xs mb-1 "
+            htmlFor="biografia"
+            className="text-gray-600 font-bold uppercase text-xs mb-1"
           >
-            Password
+            Biografia
           </label>
-          <input
-            type="password"
-            name="password"
-            className="border border-gray-300 p-1 rounded bg-white"
-          />
+          <textarea
+            name="biografia"
+            id="biografia"
+            className="border border-gray-300 p-1 rounded bg-white h-20"
+          ></textarea>
         </div>
         <input
           type="submit"

@@ -16,6 +16,7 @@ import Titulos from "./pages/micvroutes/Titulos";
 import Valores from "./pages/micvroutes/Valores";
 import Hitos from "./pages/micvroutes/Hitos";
 import Idiomas from "./pages/micvroutes/Idiomas";
+import Notificaciones from "./pages/Notificaciones";
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<PrincipalLayout />}>
           <Route index element={<Inicio />} />
+          <Route path="notifications" element={<Notificaciones />} />
           <Route path="user" element={<UsuarioLayout />}>
             <Route index element={<Usuario />} />
             <Route path="dir" element={<Direccion />} />
