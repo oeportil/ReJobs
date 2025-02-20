@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -21,7 +22,8 @@ public class Curriculum {
     private String descripcion;
     private String biografia;
     
-    @OneToOne(mappedBy = "curriculum", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL)
