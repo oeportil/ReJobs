@@ -24,6 +24,7 @@ public class Candidato {
     private Date fechaDisp;
     private Boolean contacto;
     private String nota;
+    private Boolean revisado;
 
     @ManyToOne
     @JoinColumn(name = "vacante_id", nullable = false)
@@ -36,7 +37,7 @@ public class Candidato {
     //Constructores
     public Candidato() {}
 
-    public Candidato(Integer id, Date fechaCan, Date fechaDisp, Boolean contacto, String nota, Vacante vacante, Usuario usuario) {
+    public Candidato(Integer id, Date fechaCan, Date fechaDisp, Boolean contacto, String nota, Vacante vacante, Boolean revisado , Usuario usuario) {
         this.id = id;
         this.fechaCan = fechaCan;
         this.fechaDisp = fechaDisp;
@@ -44,15 +45,17 @@ public class Candidato {
         this.nota = nota;
         this.vacante = vacante;
         this.usuario = usuario;
+        this.revisado = revisado;
     }
 
-    public Candidato(Date fechaCan, Date fechaDisp, Boolean contacto, String nota, Vacante vacante, Usuario usuario) {
+    public Candidato(Date fechaCan, Date fechaDisp, boolean contacto, String nota, Vacante vacante, Boolean revisado, Usuario usuario) {
         this.fechaCan = fechaCan;
         this.fechaDisp = fechaDisp;
         this.contacto = contacto;
         this.nota = nota;
         this.vacante = vacante;
         this.usuario = usuario;
+        this.revisado = revisado;
     }
 
     // Getters y Setters
@@ -70,4 +73,6 @@ public class Candidato {
     public void setVacante(Vacante vacante) { this.vacante = vacante; }
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public Boolean getRevisado() { return revisado; }
+    public void setRevisado(Boolean revisado) { this.revisado = revisado; }
 }

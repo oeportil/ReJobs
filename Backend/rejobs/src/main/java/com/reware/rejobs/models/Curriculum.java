@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,7 +21,7 @@ public class Curriculum {
     private String descripcion;
     private String biografia;
     
-    @OneToOne(mappedBy = "curriculum", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "curriculum", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Usuario usuario;
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL)

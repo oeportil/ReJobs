@@ -2,14 +2,18 @@ package com.reware.rejobs.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "usuarios")
@@ -19,7 +23,9 @@ public class Usuario {
     private Integer id;
     private String nombre;
     private String apellido;
+    @Email
     private String email;
+    @JsonIgnore
     private String password;
     private String telefono;
     private String pfp;
@@ -34,7 +40,7 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Candidato> candidatos;
     
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Curriculum curriculum;
 
     @OneToMany(mappedBy = "reclutador", cascade = CascadeType.ALL)
@@ -88,8 +94,8 @@ public class Usuario {
     public void setNotificaciones(List<Notificacion> notificaciones){this.notificaciones = notificaciones;}
     public List<Candidato> getCandidatos(){ return candidatos;}
     public void setCandidatos(List<Candidato> candidatos){this.candidatos = candidatos;}
-    public Curriculum getCurriculums(){ return curriculum;}
-    public void setCurriculums(Curriculum curriculum){this.curriculum = curriculum;}
+    public Curriculum getCurriculum(){ return curriculum;}
+    public void setCurriculum(Curriculum curriculum){this.curriculum = curriculum;}
     public List<Vacante> getVacantes(){ return vacantes;}
     public void setVacantes(List<Vacante> vacantes){this.vacantes = vacantes;}
 }
