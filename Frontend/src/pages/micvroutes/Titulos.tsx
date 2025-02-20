@@ -30,7 +30,7 @@ const Titulos = () => {
           <input
             type="date"
             name="fecha"
-            className="border border-gray-300 p-1 rounded bg-white"
+            className="border border-gray-300 p-1 rounded bg-white w-full"
           />
         </div>
 

@@ -40,7 +40,7 @@ const GuardarVacante = () => {
           <input
             type="date"
             name="fecha_incio"
-            className="border border-gray-300 p-1 rounded bg-white"
+            className="border border-gray-300 p-1 rounded bg-white w-full"
           />
         </div>
 
@@ -54,7 +54,7 @@ const GuardarVacante = () => {
           <input
             type="date"
             name="fecha_fin"
-            className="border border-gray-300 p-1 rounded bg-white"
+            className="border border-gray-300 p-1 rounded bg-white w-full"
           />
         </div>
 

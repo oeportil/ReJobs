@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 const Register = () => {
   return (
-    <div className="md:w-2/5">
+    <div className="md:w-4/6 w-11/12 mx-auto mt-5 md:mt-0">
       <h2 className="text-4xl font-bold text-slate-800">Crear Cuenta</h2>
       <p className="text-slate-700 mb-4">
         Llena el siguiente formulario para crear tu cuenta

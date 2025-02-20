@@ -28,7 +28,7 @@ const Experiencias = () => {
           <input
             type="date"
             name="fecha_inicio"
-            className="border border-gray-300 p-1 rounded bg-white"
+            className="border border-gray-300 p-1 rounded bg-white w-full"
           />
         </div>
 
@@ -42,7 +42,7 @@ const Experiencias = () => {
           <input
             type="date"
             name="fecha_fin"
-            className="border border-gray-300 p-1 rounded bg-white"
+            className="border border-gray-300 p-1 rounded bg-white w-full"
           />
         </div>
 
@@ -110,7 +110,7 @@ const Experiencias = () => {
             obcaecati accusamus quis quidem!
           </p>
           <div className="flex justify-between">
-            <p className="text-xs font-bold text-slate-600 mt-4 text-end">
+            <p className="text-xs font-bold text-slate-600 mt-4 text-end ">
               fecha inicio: 12/12/12
             </p>
             <p className="text-xs font-bold text-slate-600 mt-4 text-end">

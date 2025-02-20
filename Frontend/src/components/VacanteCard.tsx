@@ -6,7 +6,7 @@ type Props = {
 const VacanteCard = ({ reclutador }: Props) => {
   return (
     <Link
-      to={""}
+      to={`/vacancy/${1}`}
       className={`${
         reclutador &&
         "flex md:items-center justify-between md:flex-row flex-col"
