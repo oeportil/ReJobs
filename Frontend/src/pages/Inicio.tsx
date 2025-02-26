@@ -13,11 +13,12 @@ const Inicio = () => {
               type="text"
               name="busqueda"
               placeholder="¿Qué trabajo estás buscando?"
-              className="border border-gray-300 p-1 rounded-bl-xl rounded-tl-xl w-full bg-white"
+              className="border border-gray-300 p-1 rounded-bl-full rounded-tl-full w-full bg-white"
             />
             <button
               type="submit"
-              className="bg-sky-900 hover:bg-sky-950 cursor-pointer transition-colors text-white p-2 rounded-br-xl rounded-tr-xl"
+              className="bg-sky-900 hover:bg-sky-950 cursor-pointer transition-colors text-white p-2 rounded-br-full rounded-tr-full
+              "
             >
               Buscar
             </button>

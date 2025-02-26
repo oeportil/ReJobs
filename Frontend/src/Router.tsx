@@ -23,6 +23,7 @@ import GuardarVacante from "./pages/reclutador/GuardarVacante";
 import Candidatos from "./pages/reclutador/Candidatos";
 import Requisitos from "./pages/reclutador/Requisitos";
 import Candidato from "./pages/reclutador/Candidato";
+import Vacante from "./pages/Vacante";
 
 const Router = () => {
   return (
@@ -33,7 +34,7 @@ const Router = () => {
           <Route path="notifications" element={<Notificaciones />} />
           <Route path="applications" element={<MisPostulaciones />} />
           <Route path="vacancy" element={<MisVacantes />} />
-          <Route path="vacancy/:id" element={<MisVacantes />} />
+          <Route path="vacancy/:id" element={<Vacante />} />
           <Route path="vacancy/:id/requirements" element={<Requisitos />} />
           <Route path="vacancy/:id/applicants" element={<Candidatos />} />
           <Route
