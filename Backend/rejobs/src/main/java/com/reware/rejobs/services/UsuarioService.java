@@ -27,4 +27,31 @@ public class UsuarioService {
         }
         return null;
     } 
+
+    //ObtenerDatos
+    public Usuario DataUser(int id){
+        Usuario usuario = usuarioRepository.findByIdUser(id);
+        return usuario;
+    }
+
+    //Crear usuario
+    public Usuario createUsuario(Usuario usuario) {
+        String contra = usuario.getPassword();
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword())); // Encriptar la contraseña
+        Usuario nuevoUsuario = usuarioRepository.save(usuario);
+        return nuevoUsuario;
+    }
+
+    //Actualizar Usuario
+    public Usuario updateUsuario(
+        int id,
+        String nombre,
+        String apellido,
+        String email,
+        String password,
+        String telefono,
+        Boolean reclutador
+    ){
+        
+    }
 }
