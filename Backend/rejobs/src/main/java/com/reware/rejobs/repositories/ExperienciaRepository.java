@@ -14,7 +14,7 @@ import com.reware.rejobs.models.Experiencia;
 public interface ExperienciaRepository extends JpaRepository<Experiencia, Integer>{
     
     //Buscar Experiencias de un Usuario en especifico
-    @EntityGraph(attributePaths= {"curriculum"})
-    @Query("SELECT e FROM Experiencia WHERE e.curriculum.usuario.id = :idUsuario")
+    @EntityGraph(attributePaths = {"curriculum"})
+    @Query("SELECT e FROM Experiencia e WHERE e.curriculum.usuario.id = :idUsuario")
     List<Experiencia> findByUser(@Param("idUsuario") Integer idUsuario);
 }

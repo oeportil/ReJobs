@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
 import com.reware.rejobs.models.Usuario;
 
@@ -15,16 +16,22 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     //Buscar Usuario por Email
     @EntityGraph(attributePaths= {"curriculum"})
-    @Query("SELECT u FROM Usuario u WHERE u.id = :id")
-    Usuario findByEmail(@Param("id") String email);
+    @Query("SELECT u FROM Usuario u WHERE u.email = :email")
+    Usuario findByEmail(@Param("email") String email);
 
     //Buscar Usuario por id
+    @Override
     @EntityGraph(attributePaths= {"curriculum"})
-    Usuario findByIdUser(Integer id);
+    Optional<Usuario> findById(Integer id);
 
     //Buscar por subcategoria en la categoria de notificacion
-    @EntityGraph(attributePaths= {"notificaciones"})
-    @Query("SELECT u FROM Usuario u WHERE u.notificaciones.subcategoria = :subcategoria AND u.notificaciones.categoria = :categoria")
-    List<Usuario> findBySubcategoryAndCategory(@Param("subcategoria") String subcategoria, @Param("categoria") String categoria);
+    @EntityGraph(attributePaths = {"notificaciones"})
+    @Query("SELECT DISTINCT u FROM Usuario u " +
+       "JOIN u.notificaciones n " +
+       "JOIN n.categoria c " +
+       "JOIN c.subCategorias sc " +
+       "WHERE c.nombre = :categoria AND sc.nombre = :subcategoria")
+    List<Usuario> findByCategoryAndSubcategory(@Param("categoria") String categoria, @Param("subcategoria") String subcategoria);
+
 }
 

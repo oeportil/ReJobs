@@ -29,6 +29,7 @@ public class Vacante {
     private String nombre;
     private String ciudad;
     private String region;
+    private String contrato;
     private String pais;
     private String emailContacto;
     private Boolean activo;
@@ -45,7 +46,7 @@ public class Vacante {
     private SubCategoria subCategoria;
 
     public Vacante() {}
-    public Vacante(Integer id, String empresa, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
+    public Vacante(Integer id, String contrato,String empresa, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
         this.id = id;
         this.empresa = empresa;
         this.fechaInicio = fechaInicio;
@@ -59,7 +60,7 @@ public class Vacante {
         this.reclutador = reclutador;
         this.subCategoria = subCategoria;
     }
-    public Vacante(String empresa, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
+    public Vacante(String empresa, String contrato, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
         this.empresa = empresa;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -99,4 +100,7 @@ public class Vacante {
     public void setSubCategoria(SubCategoria subCategoria) { this.subCategoria = subCategoria; }
     public List<Requisito> getRequisitos() { return requisitos; }
     public void setRequisitos(List<Requisito> requisitos) { this.requisitos = requisitos; }
+    public void setContrato(String contrato){ this.contrato = contrato;};
+    public String getContrato(){ return contrato; }
+    
 }

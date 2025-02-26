@@ -16,7 +16,7 @@ public interface SubCategoriaRepository extends JpaRepository<SubCategoria, Inte
     List<SubCategoria> findByNombreLike(@Param("nombre") String nombre);
     
     //Buscar SubCategorias por Categoria (Id)
-    @Query("SELECT s FROM SubCategoria WHERE s.categoria.id = :categoriaId")
+    @Query("SELECT s FROM SubCategoria s WHERE s.categoria.id = :categoriaId")
     List<SubCategoria> findByCategoriaId(@Param("categoriaId") Integer categoriaId);
 
     //Buscar SubCategorias por Categoria (Nombre)

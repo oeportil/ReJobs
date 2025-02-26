@@ -14,6 +14,6 @@ import com.reware.rejobs.models.Hito;
 public interface HitoRepository extends JpaRepository<Hito, Integer>{
     //Buscar Hitos de un Usuario especifico
     @EntityGraph(attributePaths= {"curriculum"})
-    @Query("SELECT h FROM Hito WHERE h.curriculum.usuario.id = :idUsuario")
+    @Query("SELECT h FROM Hito h WHERE h.curriculum.usuario.id = :idUsuario")
     List<Hito> findByUser(@Param("idUsuario") Integer idUsuario);
 }

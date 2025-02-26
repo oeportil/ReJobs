@@ -23,9 +23,9 @@ interface VacanteRepository extends JpaRepository<Vacante, Integer> {
     @Query("SELECT v FROM Vacante v WHERE LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)")
     List<Vacante> findByLike(@Param("dato") String dato);
 
-    // Encontrar vacantes activas con like de nombre, empresa, contrato, salario o ubicacion, y por id de subcategoria
     @EntityGraph(attributePaths = {"subCategoria"})
-    @Query("SELECT v FROM Vacante v WHERE LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) AND v.subCategoria.id = :idSubcategoria")
+    @Query("SELECT v FROM Vacante v WHERE (LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)) AND v.subCategoria.id = :idSubcategoria")
     List<Vacante> findByLikeAndSubcategoryId(@Param("dato") String dato, @Param("idSubcategoria") Integer idSubcategoria);
+
 }
 
