@@ -19,9 +19,12 @@ export const useAuth = ({ middleware }: AuthType) => {
     }
 
     const register = async (newUser: unknown): Promise<string | void> => {
-        const response = await axiosClient.post('/api/usuarios/create', newUser);
-
-        console.log(response);
+        try {
+            const response = await axiosClient.post('/api/usuarios/create', newUser);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
