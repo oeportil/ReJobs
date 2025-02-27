@@ -1,6 +1,45 @@
+import React, { useState } from "react";
 import { Link } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const Register = () => {
+  const { register } = useAuth({});
+
+  const [error, setErrores] = useState<Array<string>>([]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const err = [];
+    const formData = new FormData(e.currentTarget);
+    let tipo: FormDataEntryValue | null = "";
+    const nombre = formData.get("nombre");
+    const apellido = formData.get("apellido");
+    tipo = formData.get("reclutador");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const passwordConf = formData.get("password_conf");
+
+    const newUser = {
+      nombre,
+      apellido,
+      tipo: tipo == 1 ? true : tipo == 0 ? false : "",
+      email,
+      password,
+    };
+    Object.keys(newUser).forEach((field) => {
+      if (newUser[field].length == 0) {
+        err.push(`El Campo ${field} es Requerido`);
+      }
+    });
+    console.log(newUser);
+    if (password !== passwordConf) {
+      err.push("Las Contraseñas no coinciden");
+    }
+    if (err.length != 0) return setErrores(err);
+    setErrores([]);
+    register(newUser);
+  };
+
   return (
     <div className="md:w-4/6 w-11/12 mx-auto mt-5 md:mt-0">
       <h2 className="text-4xl font-bold text-slate-800">Crear Cuenta</h2>
@@ -8,7 +47,19 @@ const Register = () => {
         Llena el siguiente formulario para crear tu cuenta
       </p>
       <div className="bg-white rounded shadow-sm shadow-gray-500 p-4 w-full">
-        <form action="" className="space-y-4">
+        {error.length != 0 && (
+          <div className="space-y-2 mb-2">
+            {error.map((error, index) => (
+              <p
+                key={index}
+                className="text-red-500 text-xs uppercase text-center bg-red-100 p-1 border border-red-500"
+              >
+                {error}
+              </p>
+            ))}
+          </div>
+        )}
+        <form action="" className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col ">
             <label
               htmlFor="nombre"
@@ -49,7 +100,7 @@ const Register = () => {
               id="reclutador"
               className="border border-gray-300 p-1 rounded"
             >
-              <option>-- Selecciona una opcion --</option>
+              <option value={""}>-- Selecciona una opcion --</option>
               <option value="1">
                 Reclutador -- Podras Crear Vacantes de Trabajo
               </option>
@@ -96,7 +147,7 @@ const Register = () => {
             </label>
             <input
               type="password"
-              name="password"
+              name="password_conf"
               className="border border-gray-300 p-1 rounded "
             />
           </div>
