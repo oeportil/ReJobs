@@ -17,4 +17,13 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Integer>{
     @Query("SELECT c FROM Categoria c WHERE LOWER(c.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))")
     List<Categoria> findByNombreLike(@Param("nombre") String nombre);
     
+    //Buscar Categorias por SubCategorias
+    @EntityGraph(attributePaths = {"subCategorias"}) 
+    @Query("SELECT c FROM Categoria c WHERE c.id IN (SELECT sc.categoria.id FROM SubCategoria sc WHERE LOWER(sc.nombre) LIKE LOWER(CONCAT('%', :nombre, '%')))")
+    List<Categoria> findBySubCategoriasLike(@Param("nombre") String nombre);
+
+    //Buscar Categorias por id Subcategorias
+    @EntityGraph(attributePaths = {"subCategorias"}) 
+    @Query("SELECT c FROM Categoria c WHERE c.id IN (SELECT sc.subCategoria.id FROM SubCategoria sc WHERE sc.id = :idSubCategoria)")
+    List<Categoria> findBySubCategoryId(@Param("idSubCategoria") Integer idSubCategoria);
 }

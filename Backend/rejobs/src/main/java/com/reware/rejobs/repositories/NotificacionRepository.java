@@ -14,6 +14,20 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
     //Buscar Notificaciones por Usuario
     @Query("SELECT n FROM Notificacion n WHERE n.usuario.id = :idUsuario")
     List<Notificacion> findByUsuario(@Param("idUsuario") Integer idUsuario);
+
+    //Buscar Notificaciones por Categoria
+    @Query("SELECT n FROM Notificacion n WHERE n.categoria.id = :idCategoria")
+    List<Notificacion> findByCategoria(@Param("idCategoria") Integer idCategoria);
+
+    //Buscar Notificaciones por SubCategorias
+    @Query("SELECT n FROM Notificacion n " +
+       "JOIN n.categoria c " +
+       "JOIN c.subCategorias sc " +
+       "WHERE sc.id = :idSubCategoria")
+    List<Notificacion> findBySubCategoryId(@Param("idSubCategoria") Integer idSubCategoria);
+
+
+
 }
 
 

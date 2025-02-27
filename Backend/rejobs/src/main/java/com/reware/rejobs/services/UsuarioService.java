@@ -71,6 +71,10 @@ public class UsuarioService {
         }).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
+    //Verificar por email
+    public boolean existsByEmail(String email) {
+        return usuarioRepository.findByEmail(email) != null;
+    }    
 
     //Actualizar contraseña del usuario
     public Usuario updatePassword(int id, String password){
