@@ -35,7 +35,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    // 📌 LOGIN
+    // LOGIN
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> logIn(@RequestBody LoginRequest loginRequest) {
         Map<String, Object> response = new HashMap<>();
@@ -48,15 +48,23 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
-    // 📌 CREAR USUARIO
+    // CREAR USUARIO
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> createUsuario(@RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
-        Usuario usuario = new Usuario();
+
+        String email = request.get("email");
         
+        // Verificar si el email ya existe
+        if (usuarioService.existsByEmail(email)) {
+            response.put("error", "El correo ya existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        Usuario usuario = new Usuario();
         usuario.setNombre(request.get("nombre"));
         usuario.setApellido(request.get("apellido"));
-        usuario.setEmail(request.get("email"));
+        usuario.setEmail(email);
         usuario.setTelefono(request.get("telefono"));
         usuario.setPassword(request.get("password"));
         usuario.setReclutador(Boolean.parseBoolean(request.get("reclutador")));
@@ -67,7 +75,8 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // 📌 OBTENER USUARIO POR ID
+
+    // OBTENER USUARIO POR ID
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getUserData(@PathVariable int id) {
         Map<String, Object> response = new HashMap<>();
@@ -80,7 +89,7 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
-    // 📌 ACTUALIZAR USUARIO
+    // ACTUALIZAR USUARIO
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateUsuario(
         @PathVariable int id, 
@@ -104,7 +113,7 @@ public class UsuarioController {
         }
     }
 
-    // 📌 ACTUALIZAR CONTRASEÑA
+    // ACTUALIZAR CONTRASEÑA
     @PutMapping("/{id}/password")
     public ResponseEntity<Map<String, Object>> updatePassword(@PathVariable int id, @RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
@@ -118,7 +127,7 @@ public class UsuarioController {
         }
     }
 
-    // 📌 SUBIR IMAGEN DE PERFIL
+    // SUBIR IMAGEN DE PERFIL
     @PostMapping("/{id}/upload")
     public ResponseEntity<Map<String, Object>> uploadProfilePicture(@PathVariable int id, @RequestParam("file") MultipartFile file) {
         Map<String, Object> response = new HashMap<>();
@@ -147,7 +156,7 @@ public class UsuarioController {
         }
     }
 
-    // 📌 OBTENER IMAGEN DE PERFIL
+    // OBTENER IMAGEN DE PERFIL
     @GetMapping("/{id}/imagen")
     public ResponseEntity<byte[]> getProfilePicture(@PathVariable int id) {
         Usuario usuario = usuarioService.DataUser(id);

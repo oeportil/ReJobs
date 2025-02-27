@@ -31,7 +31,7 @@ public class DireccionService {
         if (usuario == null) {
             throw new RuntimeException("Usuario no encontrado");
         }
-        //Crear la dirección con los datos primitivos y el usuario obtenido
+        //Crear la dirección 
         Direccion nuevaDireccion = new Direccion(pais, region, distrito, ciudad, direccion, usuario);
         return direccionRepository.save(nuevaDireccion);
     }
