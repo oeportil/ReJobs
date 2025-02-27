@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import Errores from "../components/Errores";
 
 const Register = () => {
   const { register } = useAuth({});
@@ -46,18 +47,7 @@ const Register = () => {
         Llena el siguiente formulario para crear tu cuenta
       </p>
       <div className="bg-white rounded shadow-sm shadow-gray-500 p-4 w-full">
-        {error.length != 0 && (
-          <div className="space-y-2 mb-2">
-            {error.map((error, index) => (
-              <p
-                key={index}
-                className="text-red-500 text-xs uppercase text-center bg-red-100 p-1 border border-red-500"
-              >
-                {error}
-              </p>
-            ))}
-          </div>
-        )}
+        <Errores errores={error} />
         <form action="" className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col ">
             <label

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDirection } from "../hooks/useDirection";
+import Errores from "../components/Errores";
 
 const SaveAddress = () => {
   const [error, setErrores] = useState<Array<string>>([]);
@@ -37,18 +38,7 @@ const SaveAddress = () => {
   return (
     <div className="my-10">
       <h2 className="text-4xl font-bold text-slate-800">Crear Dirección</h2>
-      {error.length != 0 && (
-        <div className="space-y-2 mb-2">
-          {error.map((error, index) => (
-            <p
-              key={index}
-              className="text-red-500 text-xs uppercase text-center bg-red-100 p-1 border border-red-500"
-            >
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
+      <Errores errores={error} />
       <form action="" className="space-y-4 p-2" onSubmit={handleSubmit}>
         <div className="flex flex-col ">
           <label
