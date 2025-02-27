@@ -2,6 +2,8 @@ package com.reware.rejobs.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,6 +26,7 @@ public class Curriculum {
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JsonIgnore
     private Usuario usuario;
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL)

@@ -1,5 +1,7 @@
 package com.reware.rejobs.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,7 @@ public class Requisito {
 
     @ManyToOne
     @JoinColumn(name = "vacante_id", nullable = false)
+    @JsonIgnore
     private Vacante vacante;
 
     public Requisito() {}

@@ -2,6 +2,8 @@ package com.reware.rejobs.models;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class Hito {
 
     @ManyToOne
     @JoinColumn(name = "curriculum_id", nullable = false)
+    @JsonIgnore
     private Curriculum curriculum;
 
     //Constructor
