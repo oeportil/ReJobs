@@ -1,17 +1,55 @@
-import { useParams } from "react-router";
+import { useState } from "react";
+import { useDirection } from "../hooks/useDirection";
 
 const SaveAddress = () => {
-  const params = useParams();
-  console.log(params);
-  const isEdit = () => params.id;
+  const [error, setErrores] = useState<Array<string>>([]);
+  const { createDirection } = useDirection();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const err: string[] = [];
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const pais = formData.get("pais");
+    const region = formData.get("region");
+    const distrito = formData.get("distrito");
+    const ciudad = formData.get("ciudad");
+    const direccion = formData.get("direccion");
+
+    const { id } = JSON.parse(localStorage.getItem("REJOBS_TOKEN")!);
+
+    const Direction = {
+      pais,
+      region,
+      distrito,
+      ciudad,
+      direccion,
+      idUsuario: id,
+    };
+    Object.keys(Direction).forEach((field) => {
+      if (Direction[field].length == 0) {
+        err.push(`El Campo ${field} es Requerido`);
+      }
+    });
+    if (err.length != 0) return setErrores(err);
+    createDirection(Direction, setErrores);
+  };
 
   return (
     <div className="my-10">
-      <h2 className="text-4xl font-bold text-slate-800">
-        {isEdit() ? "Editar Dirección" : "Crear Dirección"}
-      </h2>
-      <p className="text-slate-700 mb-4"></p>
-      <form action="" className="space-y-4 p-2">
+      <h2 className="text-4xl font-bold text-slate-800">Crear Dirección</h2>
+      {error.length != 0 && (
+        <div className="space-y-2 mb-2">
+          {error.map((error, index) => (
+            <p
+              key={index}
+              className="text-red-500 text-xs uppercase text-center bg-red-100 p-1 border border-red-500"
+            >
+              {error}
+            </p>
+          ))}
+        </div>
+      )}
+      <form action="" className="space-y-4 p-2" onSubmit={handleSubmit}>
         <div className="flex flex-col ">
           <label
             htmlFor="pais"
@@ -83,7 +121,7 @@ const SaveAddress = () => {
         </div>
         <input
           type="submit"
-          value={isEdit() ? "Editar Dirección" : "Crear Dirección"}
+          value={"Crear Dirección"}
           className="bg-sky-800 text-white font-bold text-center p-2 rounded w-full hover:bg-sky-950 transition-colors cursor-pointer"
         />
       </form>

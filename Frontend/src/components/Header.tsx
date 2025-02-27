@@ -2,9 +2,11 @@ import { Link } from "react-router";
 import Logo from "./Logo";
 import useReJobsContext from "../hooks/useReJobsContext";
 import { IRejobsContext } from "../context/ReJobsProvider";
+import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
   const { modalView, setModalView } = useReJobsContext() as IRejobsContext;
+  const { isRecruiter } = useAuth({});
   return (
     <header className="flex md:flex-row flex-col p-4 bg-white justify-between items-center">
       <Link to={"/"} className="flex items-center">
@@ -16,18 +18,24 @@ const Header = () => {
           <span className="bg-sky-800 text-white px-2 rounded-full">0</span>{" "}
           <p className="hover:underline">Notificaciones</p>
         </Link>
-        <Link to={"/user"} className="hover:underline">
-          Usuario
-        </Link>
-        <Link to={"/cv"} className="hover:underline">
-          Mi CV
-        </Link>
-        <Link to={"/applications"} className="hover:underline">
-          Mis Postulaciones
-        </Link>
-        <Link to={"/vacancy"} className="hover:underline">
-          Mis Vacantes
-        </Link>
+        {!isRecruiter() && (
+          <>
+            <Link to={"/user"} className="hover:underline">
+              Usuario
+            </Link>
+            <Link to={"/cv"} className="hover:underline">
+              Mi CV
+            </Link>
+            <Link to={"/applications"} className="hover:underline">
+              Mis Postulaciones
+            </Link>
+          </>
+        )}
+        {isRecruiter() && (
+          <Link to={"/vacancy"} className="hover:underline">
+            Mis Vacantes
+          </Link>
+        )}
         <button
           onClick={() => setModalView(!modalView)}
           className="hover:underline cursor-pointer"

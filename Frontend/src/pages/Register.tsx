@@ -31,13 +31,12 @@ const Register = () => {
         err.push(`El Campo ${field} es Requerido`);
       }
     });
-    console.log(newUser);
     if (password !== passwordConf) {
       err.push("Las Contraseñas no coinciden");
     }
     if (err.length != 0) return setErrores(err);
     setErrores([]);
-    register(newUser);
+    register(newUser, setErrores);
   };
 
   return (

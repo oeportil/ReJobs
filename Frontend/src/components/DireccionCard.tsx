@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 
 const DireccionCard = () => {
   return (
@@ -19,12 +18,6 @@ const DireccionCard = () => {
         </p>
       </div>
       <div className="flex flex-col space-y-2 sm:mt-0 mt-2">
-        <Link
-          to={`${1}`}
-          className="bg-sky-900 hover:bg-sky-950 text-white uppercase p-2 rounded text-center font-bold text-sm"
-        >
-          Editar
-        </Link>
         <button
           type="button"
           className="bg-red-400  hover:bg-red-500 text-white uppercase p-2 rounded text-center cursor-pointer font-bold text-sm"
