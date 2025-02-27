@@ -18,7 +18,7 @@ export const useAuth = ({ middleware }: AuthType) => {
 
     }
 
-    const register = async (newUser: any): Promise<string | void> => {
+    const register = async (newUser: unknown): Promise<string | void> => {
         const response = await axiosClient.post('/api/usuarios/create', newUser);
 
         console.log(response);

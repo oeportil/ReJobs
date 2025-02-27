@@ -67,7 +67,7 @@ public class UsuarioController {
         usuario.setEmail(email);
         usuario.setTelefono(request.get("telefono"));
         usuario.setPassword(request.get("password"));
-        usuario.setReclutador(Boolean.parseBoolean(request.get("reclutador")));
+        usuario.setReclutador(Boolean.parseBoolean(request.get("tipo")));
 
         Usuario nuevoUsuario = usuarioService.createUsuario(usuario);
         response.put("message", "Usuario creado exitosamente.");
