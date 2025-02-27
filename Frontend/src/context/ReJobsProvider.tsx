@@ -9,12 +9,17 @@ type Props = {
 export interface IRejobsContext {
   modalView: boolean;
   setModalView: (value: boolean) => void;
+  update: boolean;
+  setUpdate: (value: boolean) => void;
 }
 const ReJobsProvider = ({ children }: Props) => {
   const [modalView, setModalView] = useState<boolean>(false);
+  const [update, setUpdate] = useState<boolean>(false);
 
   return (
-    <ReJobsContext.Provider value={{ modalView, setModalView }}>
+    <ReJobsContext.Provider
+      value={{ modalView, setModalView, update, setUpdate }}
+    >
       {children}
     </ReJobsContext.Provider>
   );
