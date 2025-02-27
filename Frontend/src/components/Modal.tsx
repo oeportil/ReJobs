@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const Modal = () => {
   const { modalView, setModalView } = useReJobsContext() as IRejobsContext;
-  const { logout } = useAuth();
+  const { logout } = useAuth({middleware: "auth"});
   const customStyles = {
     content: {
       top: "50%",
