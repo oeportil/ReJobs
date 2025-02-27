@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.reware.rejobs.models.Direccion;
 
 @Repository
-interface DireccionRepository extends JpaRepository<Direccion, Integer> {
+public interface DireccionRepository extends JpaRepository<Direccion, Integer> {
     //Obtener Direcciones por Usuario
     @Query("SELECT d FROM Direccion d WHERE d.usuario.id = :idUsuario")
     List<Direccion> findByUsuario(@Param("idUsuario") Integer idUsuario);

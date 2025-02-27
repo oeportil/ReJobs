@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.reware.rejobs.models.Notificacion;
 
 @Repository
-interface NotificacionRepository extends JpaRepository<Notificacion, Integer> {
+public interface NotificacionRepository extends JpaRepository<Notificacion, Integer> {
     //Buscar Notificaciones por Usuario
     @Query("SELECT n FROM Notificacion n WHERE n.usuario.id = :idUsuario")
     List<Notificacion> findByUsuario(@Param("idUsuario") Integer idUsuario);

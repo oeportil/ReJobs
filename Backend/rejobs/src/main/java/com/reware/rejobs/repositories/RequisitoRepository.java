@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.reware.rejobs.models.Requisito;
 
 @Repository
-interface RequisitoRepository extends JpaRepository<Requisito, Integer> {
+public interface RequisitoRepository extends JpaRepository<Requisito, Integer> {
 
     // Encontrar Requisitos de una vacante especifica
     @EntityGraph(attributePaths= {"vacante"})

@@ -12,20 +12,54 @@ import org.springframework.stereotype.Repository;
 import com.reware.rejobs.models.Vacante;
 
 @Repository
-interface VacanteRepository extends JpaRepository<Vacante, Integer> {
+public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
 
     // Encontrar Vacantes de un usuario especifico
     @Query("SELECT v FROM Vacante v WHERE v.reclutador.id = :idUsuario")
     List<Vacante> findByUserId(@Param("idUsuario") Integer idUsuario);
 
-    // Encontrar vacantes activas con like de nombre, empresa, contrato, salario, ubicacion, categoria o subcategoria
+    // Nueva Query - Ordenar por fechaInicio
+    @Query("SELECT v FROM Vacante v WHERE v.reclutador.id = :idUsuario ORDER BY " +
+           "CASE WHEN :ascendente = true THEN v.fechaInicio END ASC, " +
+           "CASE WHEN :ascendente = false THEN v.fechaInicio END DESC")
+    List<Vacante> findByUserIdOrdered(@Param("idUsuario") Integer idUsuario, @Param("ascendente") Boolean ascendente);
+
+    // Encontrar vacantes activas con búsqueda LIKE
     @EntityGraph(attributePaths = {"subCategoria"})
     @Query("SELECT v FROM Vacante v WHERE LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)")
     List<Vacante> findByLike(@Param("dato") String dato);
 
+    // Nueva Query - Buscar por LIKE y ordenar por fechaInicio
     @EntityGraph(attributePaths = {"subCategoria"})
-    @Query("SELECT v FROM Vacante v WHERE (LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)) AND v.subCategoria.id = :idSubcategoria")
+    @Query("SELECT v FROM Vacante v WHERE " +
+           "(LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR " +
+           "LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR " +
+           "LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)) " +
+           "ORDER BY " +
+           "CASE WHEN :ascendente = true THEN v.fechaInicio END ASC, " +
+           "CASE WHEN :ascendente = false THEN v.fechaInicio END DESC")
+    List<Vacante> findByLikeOrdered(@Param("dato") String dato, @Param("ascendente") Boolean ascendente);
+
+    // Buscar por LIKE y subcategoría
+    @EntityGraph(attributePaths = {"subCategoria"})
+    @Query("SELECT v FROM Vacante v WHERE " +
+           "(LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR " +
+           "LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR " +
+           "LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)) " +
+           "AND v.subCategoria.id = :idSubcategoria")
     List<Vacante> findByLikeAndSubcategoryId(@Param("dato") String dato, @Param("idSubcategoria") Integer idSubcategoria);
 
+    // Nueva Query - Buscar por LIKE, subcategoría y ordenar por fechaInicio
+    @EntityGraph(attributePaths = {"subCategoria"})
+    @Query("SELECT v FROM Vacante v WHERE " +
+           "(LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR " +
+           "LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR " +
+           "LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)) " +
+           "AND v.subCategoria.id = :idSubcategoria " +
+           "ORDER BY " +
+           "CASE WHEN :ascendente = true THEN v.fechaInicio END ASC, " +
+           "CASE WHEN :ascendente = false THEN v.fechaInicio END DESC")
+    List<Vacante> findByLikeAndSubcategoryIdOrdered(@Param("dato") String dato, @Param("idSubcategoria") Integer idSubcategoria, @Param("ascendente") Boolean ascendente);
 }
+
 
