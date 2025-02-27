@@ -24,4 +24,14 @@ public class CategoriaService {
     public Categoria getById(Integer id){
         return categoriaRepository.findById(id).orElse(null);
     }
+
+    //Obtener categorias por nombre
+    public Iterable<Categoria> findByNombre(String nombre){
+        return categoriaRepository.findByNombreLike("%"+nombre+"%");
+    }
+
+    //Obtener categoria por id de subcategoria
+    public Categoria getBySubCategoryId(Integer idSubCategoria){
+        return categoriaRepository.findByIdSubCategoria(idSubCategoria);
+    }
 }
