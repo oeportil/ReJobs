@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -155,10 +158,10 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-
+    
     // OBTENER IMAGEN DE PERFIL
     @GetMapping("/{id}/imagen")
-    public ResponseEntity<byte[]> getProfilePicture(@PathVariable int id) {
+    public ResponseEntity<Resource> getProfilePicture(@PathVariable int id) {
         Usuario usuario = usuarioService.DataUser(id);
         if (usuario == null || usuario.getPfp() == null) {
             return ResponseEntity.notFound().build();
@@ -166,8 +169,19 @@ public class UsuarioController {
 
         try {
             Path imagePath = Paths.get(UPLOAD_DIR + usuario.getPfp());
-            byte[] imageBytes = Files.readAllBytes(imagePath);
-            return ResponseEntity.ok().body(imageBytes);
+            Resource imageResource = new UrlResource(imagePath.toUri());
+            if (!imageResource.exists() || !imageResource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            String contentType = Files.probeContentType(imagePath);
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(imageResource);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

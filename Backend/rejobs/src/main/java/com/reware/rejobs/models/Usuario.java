@@ -42,6 +42,7 @@ public class Usuario {
     private List<Notificacion> notificaciones;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Candidato> candidatos;
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
