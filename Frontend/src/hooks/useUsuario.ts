@@ -12,6 +12,21 @@ export const useUsuario = () => {
             console.log(error);
         }
     }
+    const getImg = async () => {
+        const { id } = JSON.parse(localStorage.getItem('REJOBS_TOKEN')!);
+        try {
+            const response = await axiosClient.get(`/api/usuarios/${id}/imagen`, {
+                responseType: "arraybuffer"
+            });
+
+            const blob = new Blob([response.data], { type: "image/png" }); // Cambia el MIME si es otro tipo de imagen
+            const imageUrl = URL.createObjectURL(blob);
+            return imageUrl;
+        } catch (error: AxiosError | unknown) {
+            console.log(error);
+        }
+    }
+
 
     const updateUsuario = async (usuario: unknown, setErrores: (err: string[]) => void,
         setExito: (err: string[]) => void, exito: string[]) => {
@@ -52,7 +67,11 @@ export const useUsuario = () => {
             setErrores([]);
             const response = await axiosClient.post(`/api/usuarios/${id}/upload`, img);
             console.log(response);
-            return setExito([...exito, response.data.mensaje]);
+            setExito([...exito, response.data.mensaje]);
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+            return
         } catch (error) {
             if (error instanceof AxiosError) {
                 const message = error.response?.data.error ?? ""
@@ -61,10 +80,12 @@ export const useUsuario = () => {
         }
     }
 
+
     return {
         getUsuario,
         updateUsuario,
         updatePassword,
         updateImg,
+        getImg
     }
 }

@@ -4,8 +4,10 @@ import Errores from "../components/Errores";
 import Exito from "../components/Exito";
 
 const Usuario = () => {
-  const { getUsuario, updateUsuario, updatePassword, updateImg } = useUsuario();
+  const { getUsuario, updateUsuario, updatePassword, updateImg, getImg } =
+    useUsuario();
   const [error, setErrores] = useState<Array<string>>([]);
+  const [img, setImg] = useState<string>("");
   const [exito, setExito] = useState<string[]>([]);
   const [usuario, setUsuario] = useState<{ nombre: string; apellido: string }>({
     nombre: "",
@@ -16,6 +18,9 @@ const Usuario = () => {
   const email = useRef(null);
   const telefono = useRef(null);
   useEffect(() => {
+    getImg().then((response) => {
+      setImg(response ?? "");
+    });
     getUsuario().then((response) => {
       const { usuario } = response;
       nombre.current.value = usuario.nombre;
@@ -37,7 +42,7 @@ const Usuario = () => {
     const telefono = (form.get("telefono") as string) ?? "";
     const password = (form.get("password") as string) ?? "";
     const password_conf = (form.get("password_conf") as string) ?? "";
-    const img = (form.get("img") as File) ?? "";
+    const img = form.get("img") as File;
 
     const UpdateUsuario = {
       nombre,
@@ -177,6 +182,12 @@ const Usuario = () => {
             name="img"
             className="border border-gray-300 p-1 rounded bg-white"
           />
+        </div>
+        <div>
+          <p className="text-gray-600 font-bold uppercase text-xs mb-1">
+            Imagen Actual
+          </p>
+          <img src={img} alt="" className="w-40 h-40" />
         </div>
         <input
           type="submit"

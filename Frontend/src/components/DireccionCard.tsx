@@ -2,6 +2,8 @@ import { IRejobsContext } from "../context/ReJobsProvider";
 import { useDirection } from "../hooks/useDirection";
 import useReJobsContext from "../hooks/useReJobsContext";
 import { IDirection } from "../interface/IDirection";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 type Props = {
   direccion: IDirection;
@@ -10,8 +12,26 @@ const DireccionCard = ({ direccion }: Props) => {
   const { setUpdate } = useReJobsContext() as IRejobsContext;
   const { deleteDirection } = useDirection();
   const handleClick = (id: number) => {
-    deleteDirection(id);
-    setUpdate(true);
+    confirmAlert({
+      title: "¿Estas Seguro de Eliminar la Dirección?",
+      message: "No podras revertir esto",
+      buttons: [
+        {
+          label: "Si",
+          onClick: () => {
+            deleteDirection(id);
+            setUpdate(true);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {
+            return;
+          },
+        },
+      ],
+    });
+    return;
   };
 
   return (
