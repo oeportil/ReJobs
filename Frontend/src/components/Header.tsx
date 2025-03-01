@@ -11,13 +11,12 @@ const Header = () => {
   const [usuario, setUsuario] = useState<IUsuario>();
   const { modalView, setModalView } = useReJobsContext() as IRejobsContext;
   const { isRecruiter } = useAuth({});
-  const { getUsuario } = useUsuario();
+  const { getUsuario, getImg } = useUsuario();
   useEffect(() => {
-    getUsuario().then((response) => {
-      setUsuario(response.usuario);
+    Promise.all([getUsuario(), getImg()]).then(([uresponse, iresponse]) => {
+      setUsuario({ ...uresponse.usuario, pfp: iresponse });
     });
   }, []);
-
   return (
     <header className="flex md:flex-row flex-col p-4 bg-white justify-between items-center">
       <Link to={"/"} className="flex items-center">
@@ -32,7 +31,7 @@ const Header = () => {
               alt={`Imagen de ${usuario?.nombre ?? "Usuario"}`}
               width={30}
               height={30}
-              className="rounded-full h-9 w-9"
+              className="rounded-full h-8 w-8"
             />
           }
           <p>Bienvenido {usuario?.nombre ?? "Usuario"}</p>

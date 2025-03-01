@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { diffForHumans } from "../utils";
 
 type Props = {
   reclutador?: boolean;
@@ -107,7 +108,7 @@ const VacanteCard = ({ reclutador }: Props) => {
             </svg>
             1,200
           </p>
-          <p className="text-xs uppercase text-slate-900"> Hace 1 minuto</p>
+          <p className="text-xs uppercase text-slate-900">{diffForHumans()}</p>
         </div>
       </div>
       <div>

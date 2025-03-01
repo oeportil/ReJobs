@@ -42,6 +42,7 @@ const Router = () => {
             element={<Candidato />}
           />
           <Route path="vacancy/create-vacancy" element={<GuardarVacante />} />
+          <Route path="vacancy/:id/edit" element={<GuardarVacante />} />
           <Route path="user" element={<UsuarioLayout />}>
             <Route index element={<Usuario />} />
             <Route path="dir" element={<Direccion />} />

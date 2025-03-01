@@ -1,6 +1,8 @@
 import { Link, Outlet } from "react-router";
+import { useEffect } from "react";
 
 const CVLayout = () => {
+  useEffect(() => {}, []);
   return (
     <div className="flex md:flex-row flex-col">
       <aside className=" bg-sky-900">
@@ -97,7 +99,7 @@ const CVLayout = () => {
           </Link>
         </nav>
       </aside>
-      <section className="overflow-y-scroll md:w-3/5 w-11/12 mx-auto">
+      <section className="md:w-3/5 w-11/12 mx-auto">
         <Outlet />
       </section>
     </div>
