@@ -180,6 +180,7 @@ const Usuario = () => {
           <input
             type="file"
             name="img"
+            accept="image/*"
             className="border border-gray-300 p-1 rounded bg-white"
           />
         </div>

@@ -18,12 +18,12 @@ const Header = () => {
     });
   }, []);
   return (
-    <header className="flex md:flex-row flex-col p-4 bg-white justify-between items-center">
+    <header className="flex lg:flex-row flex-col p-4 bg-white justify-between items-center">
       <Link to={"/"} className="flex items-center">
         <img src="/img/pato.png" alt="Imagen del Pato" width={50} />
         <Logo />
       </Link>
-      <nav className="flex gap-4 text-slate-700 md:flex-row flex-col items-center mt-4 md:mt-0">
+      <nav className="flex gap-4 text-slate-700 lg:flex-row flex-col items-center mt-4 lg:mt-0">
         <div className="flex items-center gap-2">
           {
             <img

@@ -1,8 +1,23 @@
+import { FormEvent, useEffect } from "react";
+import { IRejobsContext } from "../../context/ReJobsProvider";
+import useReJobsContext from "../../hooks/useReJobsContext";
+
 const Idiomas = () => {
+  const { getCV, curriculum } = useReJobsContext() as IRejobsContext;
+  useEffect(() => {
+    getCV().then((response) => {
+      console.log(response);
+    });
+  }, []);
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const id = JSON.parse(localStorage.getItem("REJOBS_TOKEN")).id;
+  };
   return (
     <div className="my-10">
       <h2 className="text-4xl font-bold text-slate-800">Mis Idiomas</h2>
-      <form action="" className="space-y-2 mt-5 p-4">
+      <form action="" className="space-y-2 mt-5 p-4" onSubmit={handleSubmit}>
         <div className="flex flex-col ">
           <label
             htmlFor="idioma"
@@ -25,12 +40,14 @@ const Idiomas = () => {
       </form>
 
       <div className="grid ">
-        <div className="bg-white shadow p-4 flex flex-col md:flex-row gap-4 justify-between items-center">
-          <h3 className="font-bold text-xl text-slate-900 ">Nahuat</h3>
-          <button className="bg-red-400  transition-colors hover:bg-red-500 text-white uppercase p-2 rounded text-center cursor-pointer font-bold text-sm md:w-fit w-full">
-            Eliminar
-          </button>
-        </div>
+        {curriculum.idiomas.map((idioma) => (
+          <div className="bg-white shadow p-4 flex flex-col md:flex-row gap-4 justify-between items-center">
+            <h3 className="font-bold text-xl text-slate-900 ">{idioma}</h3>
+            <button className="bg-red-400  transition-colors hover:bg-red-500 text-white uppercase p-2 rounded text-center cursor-pointer font-bold text-sm md:w-fit w-full">
+              Eliminar
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
