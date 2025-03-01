@@ -52,16 +52,16 @@ public class UsuarioService {
         Boolean reclutador
     ){
         return usuarioRepository.findById(id).map(usuario -> {
-            if (nombre != null){
+            if (nombre != null && !nombre.isBlank()) {
                 usuario.setNombre(nombre);
             }
-            if (apellido != null){
+            if (apellido != null && !apellido.isBlank()) {
                 usuario.setApellido(apellido);
             }
-            if (email != null){ 
+            if (email != null && !email.isBlank()) { 
             usuario.setEmail(email);
             }
-            if (telefono!= null){
+            if (telefono!= null && !telefono.isBlank()) {
                 usuario.setTelefono(telefono);
             }
             if (reclutador!= null){

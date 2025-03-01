@@ -1,6 +1,8 @@
 package com.reware.rejobs.models;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class SubCategoria {
     private Categoria categoria;
 
     @OneToMany(mappedBy = "subCategoria", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Vacante> vacantes;
     
     //Constructores
