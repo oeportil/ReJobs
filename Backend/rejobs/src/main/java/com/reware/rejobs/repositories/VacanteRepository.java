@@ -60,6 +60,10 @@ public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
            "CASE WHEN :ascendente = true THEN v.fechaInicio END ASC, " +
            "CASE WHEN :ascendente = false THEN v.fechaInicio END DESC")
     List<Vacante> findByLikeAndSubcategoryIdOrdered(@Param("dato") String dato, @Param("idSubcategoria") Integer idSubcategoria, @Param("ascendente") Boolean ascendente);
+
+    //Obtener id nueva vacante + 1
+    @Query("SELECT COALESCE(MAX(v.id), 0) + 1 FROM Vacante v")
+    Integer getNextId();
 }
 
 

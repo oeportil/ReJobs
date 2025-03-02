@@ -34,6 +34,11 @@ public class Vacante {
     private String contrato;
     private String pais;
     private String emailContacto;
+    private String telefonoContacto;
+    private String salario;
+    private String formato;
+    private String horario;
+    private String descripcion;
     private Boolean activo;
 
     @OneToMany(mappedBy = "vacante", cascade = CascadeType.ALL)
@@ -49,7 +54,7 @@ public class Vacante {
     private SubCategoria subCategoria;
 
     public Vacante() {}
-    public Vacante(Integer id, String contrato,String empresa, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
+    public Vacante(Integer id, String contrato,String empresa, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, String telefonoContacto, String salario, String formato, String horario,String descripcion,Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
         this.id = id;
         this.empresa = empresa;
         this.fechaInicio = fechaInicio;
@@ -59,11 +64,16 @@ public class Vacante {
         this.region = region;
         this.pais = pais;
         this.emailContacto = emailContacto;
+        this.telefonoContacto = telefonoContacto;
+        this.salario = salario;
+        this.formato = formato;
+        this.horario = horario;
+        this.descripcion = descripcion;
         this.activo = activo;
         this.reclutador = reclutador;
         this.subCategoria = subCategoria;
     }
-    public Vacante(String empresa, String contrato, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
+    public Vacante(String contrato,String empresa, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, String telefonoContacto, String salario, String formato, String horario,String descripcion,Boolean activo, Usuario reclutador, SubCategoria subCategoria) {
         this.empresa = empresa;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -72,6 +82,11 @@ public class Vacante {
         this.region = region;
         this.pais = pais;
         this.emailContacto = emailContacto;
+        this.telefonoContacto = telefonoContacto;
+        this.salario = salario;
+        this.formato = formato;
+        this.horario = horario;
+        this.descripcion = descripcion;
         this.activo = activo;
         this.reclutador = reclutador;
         this.subCategoria = subCategoria;
@@ -95,6 +110,16 @@ public class Vacante {
     public void setPais(String pais) { this.pais = pais; }
     public String getEmailContacto() { return emailContacto; }
     public void setEmailContacto(String emailContacto) { this.emailContacto = emailContacto; }
+    public String getTelefonoContacto() { return telefonoContacto; }
+    public void setTelefonoContacto(String telefonoContacto) { this.telefonoContacto = telefonoContacto; }
+    public String getSalario() { return salario; }
+    public void setSalario(String salario) { this.salario = salario; }
+    public String getFormato() { return formato; }
+    public void setFormato(String formato) { this.formato = formato; }
+    public String getHorario() { return horario; }
+    public void setHorario(String horario) { this.horario = horario; }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public Boolean getActivo() { return activo; }
     public void setActivo(Boolean activo) { this.activo = activo; }
     public Usuario getReclutador() { return reclutador; }
