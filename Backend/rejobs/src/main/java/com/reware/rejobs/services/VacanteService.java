@@ -57,7 +57,7 @@ public class VacanteService {
         SubCategoria subCategoria = subCategoriaRepository.findById(idSubCategoria).orElse(null);
 
         if ( empresa != null && contrato != null && nombre != null && ciudad != null && region != null && pais != null && emailContacto != null && reclutador != null && subCategoria != null){
-            Vacante vacante = new Vacante(null, contrato, empresa, fechaInicio, fechaFin, nombre, ciudad, region, pais, emailContacto, telefonoContacto, salario, formato, horario, descripcion,  true, reclutador, subCategoria);
+            Vacante vacante = new Vacante( contrato, empresa, fechaInicio, fechaFin, nombre, ciudad, region, pais, emailContacto, telefonoContacto, salario, formato, horario, descripcion,  true, reclutador, subCategoria);
             List<Usuario> usuarios = usuarioRepository.findBySubCategoryId(idSubCategoria);
             int newid = vacanteRepository.getNextId();
             if (usuarios == null) {
