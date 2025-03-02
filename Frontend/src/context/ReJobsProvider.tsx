@@ -27,6 +27,7 @@ const ReJobsProvider = ({ children }: Props) => {
 
   const getCV = async () => {
     const response = await getCurriculum();
+    console.log(response);
     await setCurriculum(response.curriculum);
     return response.curriculum;
   };

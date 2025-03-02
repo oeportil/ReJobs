@@ -23,7 +23,7 @@ export const useAuth = ({ middleware }: AuthType) => {
             setErrores([]);
             const response = await axiosClient.post('/api/usuarios/login', newUser);
             localStorage.setItem('REJOBS_TOKEN', JSON.stringify(response.data.usuario));
-            navigate('/');
+            window.location.href = '/';
         } catch (error: AxiosError | unknown) {
             if (error instanceof AxiosError) {
                 const message = error.response?.data.error ?? ""
@@ -37,7 +37,7 @@ export const useAuth = ({ middleware }: AuthType) => {
             setErrores([]);
             const response = await axiosClient.post('/api/usuarios/create', newUser);
             localStorage.setItem('REJOBS_TOKEN', JSON.stringify(response.data.usuario));
-            navigate('/');
+            window.location.href = '/';
         } catch (error: AxiosError | unknown) {
             if (error instanceof AxiosError) {
                 const message = error.response?.data.error ?? ""

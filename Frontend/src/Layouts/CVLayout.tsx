@@ -1,13 +1,14 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import { useEffect } from "react";
 import useReJobsContext from "../hooks/useReJobsContext";
 import { IRejobsContext } from "../context/ReJobsProvider";
 
 const CVLayout = () => {
   const { getCV, curriculum } = useReJobsContext() as IRejobsContext;
+  const location = useLocation();
   useEffect(() => {
     getCV();
-  }, []);
+  }, [location.pathname]);
   return (
     <div className="flex md:flex-row flex-col">
       <aside className=" bg-sky-900">
