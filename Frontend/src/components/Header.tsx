@@ -34,7 +34,7 @@ const Header = () => {
               className="rounded-full h-8 w-8"
             />
           }
-          <p>Bienvenido {usuario?.nombre ?? "Usuario"}</p>
+          <p>Bienvenid@ {usuario?.nombre ?? "Usuario"}</p>
         </div>
         <Link to={"/notifications"} className=" flex gap-1">
           <span className="bg-sky-800 text-white px-2 rounded-full">0</span>{" "}

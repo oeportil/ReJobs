@@ -1,8 +1,84 @@
+import { FormEvent, useState } from "react";
+import Errores from "../../components/Errores";
+import Exito from "../../components/Exito";
+import useReJobsContext from "../../hooks/useReJobsContext";
+import { IRejobsContext } from "../../context/ReJobsProvider";
+import { useCurriculum } from "../../hooks/useCurriculum";
+import { formatDate } from "../../utils";
+import { confirmAlert } from "react-confirm-alert";
+
 const Hitos = () => {
+  const { curriculum, getCV } = useReJobsContext() as IRejobsContext;
+  const { createHito, deleteHito } = useCurriculum();
+
+  const today = new Date().toISOString().split("T")[0];
+  const [date, setDate] = useState<string>("");
+  const [nombre, setNombre] = useState<string>("");
+  const [descripcion, setDescripcion] = useState<string>("");
+  const [url, setUrl] = useState<string>("");
+
+  const [errores, setErrores] = useState<string[]>([]);
+  const [exitos, setExitos] = useState<string[]>([]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const err: string[] = [];
+    if (!nombre) err.push("El Campo nombre es Requerido");
+    if (!date) err.push("El Campo Fecha es Requerido");
+    if (!descripcion) err.push("El Campo url es Requerido");
+
+    if (err.length != 0) return setErrores(err);
+    const newHito = {
+      hito: nombre,
+      fecha: date,
+      descripcion,
+      url,
+      idCurriculum: curriculum.id,
+    };
+    await createHito(newHito);
+    await getCV();
+    console.log(curriculum);
+    setExitos(["Valor Agregado Correctamente"]);
+    setNombre("");
+    setDate("");
+    setDescripcion("");
+    setUrl("");
+    setTimeout(() => {
+      setExitos([]);
+    }, 2000);
+    setErrores([]);
+    setErrores([]);
+  };
+
+  const handleEliminar = async (id: number) => {
+    confirmAlert({
+      title: "¿Estas Seguro de Eliminar El Valor?",
+      message: "No podras revertir esto",
+      buttons: [
+        {
+          label: "Si",
+          onClick: async () => {
+            await deleteHito(id);
+            getCV();
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {
+            return;
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <div className="my-10">
       <h2 className="text-4xl font-bold text-slate-800">Mis Hitos</h2>
-      <form action="" className="space-y-2 mt-5 p-4">
+      <Errores errores={errores} />
+      <Exito exitos={exitos} />
+      <form action="" className="space-y-2 mt-5 p-4" onSubmit={handleSubmit}>
         <div className="flex flex-col ">
           <label
             htmlFor="hito"
@@ -13,6 +89,8 @@ const Hitos = () => {
           <input
             type="text"
             name="hito"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
             className="border border-gray-300 p-1 rounded bg-white"
           />
         </div>
@@ -27,6 +105,8 @@ const Hitos = () => {
           <textarea
             name="descripcion"
             id="descripcion"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
             className="border border-gray-300 p-1 rounded bg-white h-20"
           ></textarea>
         </div>
@@ -41,7 +121,26 @@ const Hitos = () => {
           <input
             type="date"
             name="fecha"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            max={today}
             className="border border-gray-300 p-1 rounded bg-white w-full"
+          />
+        </div>
+
+        <div className="flex flex-col ">
+          <label
+            htmlFor="url"
+            className="text-gray-600 font-bold uppercase text-xs mb-1"
+          >
+            Url (Opcional)
+          </label>
+          <input
+            type="text"
+            name="url"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="border border-gray-300 p-1 rounded bg-white"
           />
         </div>
         <button
@@ -52,24 +151,37 @@ const Hitos = () => {
         </button>
       </form>
 
-      <div className="grid ">
-        <div className="bg-white shadow p-4">
-          <h3 className="font-bold text-xl text-slate-900 pb-2">
-            Investigacion sobre el Cliptoris
-          </h3>
-          <p className="text-sm text-slate-700">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio
-            eligendi laboriosam nulla voluptatem repellat ad eos incidunt
-            laudantium? Ea similique maxime, nemo impedit qui eveniet fugit
-            obcaecati accusamus quis quidem!
-          </p>
-          <p className="text-xs font-bold text-slate-600 mt-4 text-end">
-            fecha: 12/12/12
-          </p>
-          <button className="bg-red-400 mt-4 transition-colors hover:bg-red-500 text-white uppercase p-2 rounded text-center cursor-pointer font-bold text-sm w-full">
-            Eliminar
-          </button>
-        </div>
+      <div className="grid space-y-2 h-72 overflow-y-scroll">
+        {curriculum?.hitos?.map((hito, i) => (
+          <div key={i} className="bg-white shadow p-4 h-fit">
+            <h3 className="font-bold text-xl text-slate-900 pb-2">
+              {hito.hito}
+            </h3>
+            <p className="text-sm text-slate-700">{hito.descripcion}</p>
+            <div className="mt-1">
+              {hito.url && (
+                <a
+                  href={hito.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sky-900 font-bold text-sm hover:underline"
+                >
+                  Enlace hito {hito.hito}
+                </a>
+              )}
+            </div>
+            <p className="text-xs font-bold text-slate-600 mt-4 text-end">
+              {formatDate(hito.fecha)}
+            </p>
+
+            <button
+              onClick={() => handleEliminar(hito.id)}
+              className="bg-red-400 mt-4 transition-colors hover:bg-red-500 text-white uppercase p-2 rounded text-center cursor-pointer font-bold text-sm w-full"
+            >
+              Eliminar
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

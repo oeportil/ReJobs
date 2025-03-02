@@ -12,7 +12,7 @@ const MisPostulaciones = () => {
       </h2>
       <div className="grid items-center md:w-1/2 w-11/12 mx-auto my-5 ">
         <Link
-          to={`/vacancy/${1}`}
+          to={`/vac/${1}`}
           className={`${
             estado() == 0
               ? `bg-white border-gray-400`
