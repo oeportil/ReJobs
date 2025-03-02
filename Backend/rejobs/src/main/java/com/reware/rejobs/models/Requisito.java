@@ -33,6 +33,13 @@ public class Requisito {
         this.minimo = minimo;
         this.vacante = vacante;
     }
+    public Requisito( String nombre, String descripcion, Boolean minimo, Vacante vacante) {
+
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.minimo = minimo;
+        this.vacante = vacante;
+    }
     // Getters y Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
