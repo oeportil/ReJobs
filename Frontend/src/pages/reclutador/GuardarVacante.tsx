@@ -52,7 +52,7 @@ const GuardarVacante = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const {id} = JSON.parse(localStorage.getItem('REJOBS_TOKEN'));
+    const { id } = JSON.parse(localStorage.getItem("REJOBS_TOKEN"));
     e.preventDefault();
     const err = [];
     Object.keys(vacante).forEach((key) => {
@@ -64,9 +64,9 @@ const GuardarVacante = () => {
     setErrores([]);
     const newVacante = {
       ...vacante,
-      idUsuario: id
+      idUsuario: id,
     };
-    await createVacante(newVacante);
+    await createVacante(newVacante, setErrores);
     navigate("/vacancy");
   };
 

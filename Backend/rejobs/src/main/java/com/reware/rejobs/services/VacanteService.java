@@ -63,8 +63,12 @@ public class VacanteService {
             if (usuarios == null) {
                 usuarios = new ArrayList<>();  
             }
-            for (Usuario usuario : usuarios) {
-                correoService.enviarNotificacion(usuario.getEmail(), newid, vacante.getNombre(), vacante.getEmpresa(), subCategoria.getNombre());
+            try{
+                    for (Usuario usuario : usuarios) {
+                    correoService.enviarNotificacion(usuario.getEmail(), newid, vacante.getNombre(), vacante.getEmpresa(), subCategoria.getNombre());
+                }
+            }catch (Exception e){
+                
             }
             return vacanteRepository.save(vacante);
         }

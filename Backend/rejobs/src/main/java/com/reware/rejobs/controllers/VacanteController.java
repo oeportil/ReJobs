@@ -77,7 +77,7 @@ public class VacanteController {
                 request.get("pais").toString(),
                 request.get("emailContacto").toString(),
                 (String) request.get("telefonoContacto"),
-                (String) request.get("salario"),
+                (String) Integer.toString((Integer) request.get("salario")),
                 (String) request.get("formato"),
                 (String) request.get("horario"),
                 (String) request.get("descripcion"),
@@ -86,6 +86,7 @@ public class VacanteController {
             );
             return ResponseEntity.ok(Map.of("vacante", vacante));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(400).body(Map.of("error", e.getMessage()));
         }
     }

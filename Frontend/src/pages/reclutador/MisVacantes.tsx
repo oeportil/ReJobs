@@ -1,7 +1,22 @@
 import { Link } from "react-router";
 import VacanteCard from "../../components/VacanteCard";
+import useSWR from "swr";
+import axiosClient from "../../utils/axiosClient";
+import { IVacante } from "../../interface/IVacante";
 
 const MisVacantes = () => {
+  const { id } = JSON.parse(localStorage.getItem("REJOBS_TOKEN"));
+  const fetcher = () =>
+    axiosClient.get(`/vacantes/usuario/${id}?asc=false`).then((r) => r.data);
+  const { data, error, isLoading } = useSWR<{ vacantes: IVacante[] }>(
+    `/vacantes/usuario/${id}?asc=false`,
+    fetcher,
+    {
+      refreshInterval: 500,
+    }
+  );
+  console.log(data);
+  if (isLoading) return <div>Cargando...</div>;
   return (
     <div className="my-10">
       <h2
@@ -31,9 +46,15 @@ const MisVacantes = () => {
           </svg>
           Crear
         </Link>
-        <div className="grid">
-          <VacanteCard reclutador={true} />
-        </div>
+        {error ? (
+          <div>Error al cargar los datos</div>
+        ) : (
+          <div className="grid">
+            {data.vacantes.map((vacante, i) => (
+              <VacanteCard reclutador vacante={vacante} key={i} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

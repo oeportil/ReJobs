@@ -14,4 +14,7 @@ export interface IVacante {
     formato: string;
     salario: number;
     descripcion: string;
+    id?: number;
+    requisitos?: any[];
+    activo?: boolean;
 }
