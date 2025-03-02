@@ -1,9 +1,44 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useCategoria } from "../../hooks/useCategoria";
+import { IVacante } from "../../interface/IVacante";
 
 const GuardarVacante = () => {
   const params = useParams();
   console.log(params);
   const isEdit = () => params.id;
+  const [categorias, setCategorias] = useState<
+    { id: number; nombre: string }[]
+  >([]);
+  const [subcategorias, setSubCategorias] = useState<
+    { id: number; nombre: string }[]
+  >([]);
+  const { listCategorias, subCategoriasByID } = useCategoria();
+
+  const [vacante, setVacante] = useState<IVacante>({
+    empresa: "",
+    fechaInicio: "",
+    fechaFin: "",
+    contrato: "",
+    nombre: "",
+    ciudad: "",
+    region: "",
+    pais: "",
+    emailContacto: "",
+    idSubCategoria: 0,
+  });
+
+  useEffect(() => {
+    listCategorias().then((response) => {
+      setCategorias(response.categorias);
+    });
+  }, []);
+
+  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.currentTarget.value);
+    const response = await subCategoriasByID(+e.currentTarget.value.toString());
+    setSubCategorias(response.subcategorias);
+  };
 
   return (
     <div className="my-10 md:w-4/6 w-11/12 mx-auto">
@@ -225,8 +260,16 @@ const GuardarVacante = () => {
             name="categoria"
             id="categoria"
             className="border border-gray-300 p-1 rounded bg-white"
+            onChange={handleChange}
           >
-            <option value=""></option>
+            <option value="" disabled>
+              --Selecciona una Categoria--
+            </option>
+            {categorias.map((categoria, i) => (
+              <option value={categoria.id} key={i}>
+                {categoria.nombre}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -242,7 +285,12 @@ const GuardarVacante = () => {
             id="subcategoria_id"
             className="border border-gray-300 p-1 rounded bg-white"
           >
-            <option value=""></option>
+            <option value="">-- Selecciona una SubCategoria --</option>
+            {subcategorias.map((subcategoria, i) => (
+              <option value={subcategoria.id} key={i}>
+                {subcategoria.nombre}
+              </option>
+            ))}
           </select>
         </div>
 
