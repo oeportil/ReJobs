@@ -4,6 +4,7 @@ package com.reware.rejobs.services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.reware.rejobs.models.SubCategoria;
 import com.reware.rejobs.models.Usuario;
@@ -12,6 +13,7 @@ import com.reware.rejobs.repositories.SubCategoriaRepository;
 import com.reware.rejobs.repositories.UsuarioRepository;
 import com.reware.rejobs.repositories.VacanteRepository;
 
+@Service
 public class VacanteService {
     
     private final VacanteRepository vacanteRepository;
