@@ -26,6 +26,11 @@ const GuardarVacante = () => {
     pais: "",
     emailContacto: "",
     idSubCategoria: 0,
+    telContacto: "",
+    horario: "",
+    formato: "",
+    salario: 0,
+    descripcion: "",
   });
 
   useEffect(() => {

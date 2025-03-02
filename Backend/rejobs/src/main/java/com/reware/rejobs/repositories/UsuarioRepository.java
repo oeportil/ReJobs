@@ -34,13 +34,13 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     List<Usuario> findByCategoryAndSubcategory(@Param("categoria") String categoria, @Param("subcategoria") String subcategoria);
 
     //Buscar por subcategoría asociada a notificación
-    @EntityGraph(attributePaths = {"notificaciones"})
-    @Query("SELECT DISTINCT u FROM Usuario u " +
+   @EntityGraph(attributePaths = {"notificaciones"})
+@Query("SELECT DISTINCT u FROM Usuario u " +
        "JOIN u.notificaciones n " +
        "JOIN n.categorias c " +
-       "JOIN c.subCategorias sc " +
+       "JOIN SubCategoria sc ON sc.categoria = c " +
        "WHERE sc.id = :idSubCategoria")
-        List<Usuario> findBySubCategoryId(@Param("idSubCategoria") Integer idSubCategoria);
+List<Usuario> findBySubCategoryId(@Param("idSubCategoria") Integer idSubCategoria);
 
 }
 
