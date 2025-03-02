@@ -9,7 +9,7 @@ export interface IVacante {
     pais: string;
     emailContacto: string;
     idSubCategoria: number
-    telContacto: string;
+    telefonoContacto: string;
     horario: string;
     formato: string;
     salario: number;

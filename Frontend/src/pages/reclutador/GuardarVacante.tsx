@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useCategoria } from "../../hooks/useCategoria";
 import { IVacante } from "../../interface/IVacante";
+import Errores from "../../components/Errores";
+import { useVacante } from "../../hooks/useVacante";
 
 const GuardarVacante = () => {
+  const [errores, setErrores] = useState<string[]>([]);
+  const navigate = useNavigate();
+
   const params = useParams();
   console.log(params);
   const isEdit = () => params.id;
@@ -14,6 +19,7 @@ const GuardarVacante = () => {
     { id: number; nombre: string }[]
   >([]);
   const { listCategorias, subCategoriasByID } = useCategoria();
+  const { createVacante } = useVacante();
 
   const [vacante, setVacante] = useState<IVacante>({
     empresa: "",
@@ -26,7 +32,7 @@ const GuardarVacante = () => {
     pais: "",
     emailContacto: "",
     idSubCategoria: 0,
-    telContacto: "",
+    telefonoContacto: "",
     horario: "",
     formato: "",
     salario: 0,
@@ -45,6 +51,25 @@ const GuardarVacante = () => {
     setSubCategorias(response.subcategorias);
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const {id} = JSON.parse(localStorage.getItem('REJOBS_TOKEN'));
+    e.preventDefault();
+    const err = [];
+    Object.keys(vacante).forEach((key) => {
+      if (vacante[key] === "" || vacante[key] === 0) {
+        err.push(`El Campo ${key} es Requerido o es Incorrecto`);
+      }
+    });
+    if (err.length != 0) return setErrores(err);
+    setErrores([]);
+    const newVacante = {
+      ...vacante,
+      idUsuario: id
+    };
+    await createVacante(newVacante);
+    navigate("/vacancy");
+  };
+
   return (
     <div className="my-10 md:w-4/6 w-11/12 mx-auto">
       <h2
@@ -53,8 +78,13 @@ const GuardarVacante = () => {
       >
         {isEdit() ? "Editar Vacante" : " Crear Vacante"}
       </h2>
-
-      <form action="" className="space-y-2 mt-5 p-4">
+      <Errores errores={errores} />
+      <form
+        action=""
+        className="space-y-2 mt-5 p-4"
+        onSubmit={handleSubmit}
+        method="post"
+      >
         <div className="flex flex-col ">
           <label
             htmlFor="empresa"
@@ -65,6 +95,10 @@ const GuardarVacante = () => {
           <input
             type="text"
             name="empresa"
+            value={vacante.empresa}
+            onChange={(e) =>
+              setVacante({ ...vacante, empresa: e.currentTarget.value })
+            }
             className="border border-gray-300 p-1 rounded bg-white"
             placeholder="Ejem: ReWare Studios, Netflix ..."
           />
@@ -80,6 +114,10 @@ const GuardarVacante = () => {
           <input
             type="date"
             name="fecha_incio"
+            value={vacante.fechaInicio}
+            onChange={(e) =>
+              setVacante({ ...vacante, fechaInicio: e.currentTarget.value })
+            }
             className="border border-gray-300 p-1 rounded bg-white w-full"
           />
         </div>
@@ -94,6 +132,10 @@ const GuardarVacante = () => {
           <input
             type="date"
             name="fecha_fin"
+            value={vacante.fechaFin}
+            onChange={(e) =>
+              setVacante({ ...vacante, fechaFin: e.currentTarget.value })
+            }
             className="border border-gray-300 p-1 rounded bg-white w-full"
           />
         </div>
@@ -108,6 +150,10 @@ const GuardarVacante = () => {
           <input
             type="text"
             name="nombre"
+            value={vacante.nombre}
+            onChange={(e) =>
+              setVacante({ ...vacante, nombre: e.currentTarget.value })
+            }
             className="border border-gray-300 p-1 rounded bg-white"
             placeholder="Programador de C++"
           />
@@ -124,6 +170,10 @@ const GuardarVacante = () => {
             <input
               type="text"
               name="ciudad"
+              value={vacante.ciudad}
+              onChange={(e) =>
+                setVacante({ ...vacante, ciudad: e.currentTarget.value })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="Santa Ana"
             />
@@ -139,6 +189,10 @@ const GuardarVacante = () => {
             <input
               type="text"
               name="region"
+              value={vacante.region}
+              onChange={(e) =>
+                setVacante({ ...vacante, region: e.currentTarget.value })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="Santa Ana"
             />
@@ -154,6 +208,10 @@ const GuardarVacante = () => {
             <input
               type="text"
               name="pais"
+              value={vacante.pais}
+              onChange={(e) =>
+                setVacante({ ...vacante, pais: e.currentTarget.value })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="Singapur"
             />
@@ -171,6 +229,13 @@ const GuardarVacante = () => {
             <input
               type="tel"
               name="tel_contacto"
+              value={vacante.telefonoContacto}
+              onChange={(e) =>
+                setVacante({
+                  ...vacante,
+                  telefonoContacto: e.currentTarget.value,
+                })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="6007 0489"
             />
@@ -186,6 +251,13 @@ const GuardarVacante = () => {
             <input
               type="email"
               name="email_contacto"
+              value={vacante.emailContacto}
+              onChange={(e) =>
+                setVacante({
+                  ...vacante,
+                  emailContacto: e.currentTarget.value,
+                })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="email@email.com"
             />
@@ -203,6 +275,13 @@ const GuardarVacante = () => {
             <input
               type="text"
               name="horario"
+              value={vacante.horario}
+              onChange={(e) =>
+                setVacante({
+                  ...vacante,
+                  horario: e.currentTarget.value,
+                })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="De 8 de la mañana a 4 de la tarde, lunes a viernes"
             />
@@ -218,6 +297,13 @@ const GuardarVacante = () => {
             <input
               type="text"
               name="formato"
+              value={vacante.formato}
+              onChange={(e) =>
+                setVacante({
+                  ...vacante,
+                  formato: e.currentTarget.value,
+                })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="Remoto"
             />
@@ -233,6 +319,13 @@ const GuardarVacante = () => {
             <input
               type="text"
               name="contrato"
+              value={vacante.contrato}
+              onChange={(e) =>
+                setVacante({
+                  ...vacante,
+                  contrato: e.currentTarget.value,
+                })
+              }
               className="border border-gray-300 p-1 rounded bg-white"
               placeholder="6 meses"
             />
@@ -249,6 +342,13 @@ const GuardarVacante = () => {
           <input
             type="number"
             name="salario"
+            value={vacante.salario}
+            onChange={(e) =>
+              setVacante({
+                ...vacante,
+                salario: +e.currentTarget.value,
+              })
+            }
             className="border border-gray-300 p-1 rounded bg-white"
             placeholder="$5000"
           />
@@ -289,6 +389,10 @@ const GuardarVacante = () => {
             name="subcategoria_id"
             id="subcategoria_id"
             className="border border-gray-300 p-1 rounded bg-white"
+            value={vacante.idSubCategoria}
+            onChange={(e) =>
+              setVacante({ ...vacante, idSubCategoria: +e.currentTarget.value })
+            }
           >
             <option value="">-- Selecciona una SubCategoria --</option>
             {subcategorias.map((subcategoria, i) => (
@@ -309,6 +413,13 @@ const GuardarVacante = () => {
           <textarea
             name="descripcion"
             id="descripcion"
+            value={vacante.descripcion}
+            onChange={(e) =>
+              setVacante({
+                ...vacante,
+                descripcion: e.currentTarget.value,
+              })
+            }
             className="border border-gray-300 p-1 rounded bg-white h-20"
           ></textarea>
         </div>
