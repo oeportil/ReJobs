@@ -31,7 +31,7 @@ public class CorreoService {
     }
 
     public void enviarNotificacion(String destinatario, int id, String titulo, String empresa, String categoria) {
-        String asunto = "Ticket Creado con id " + id;
+        String asunto = "NUEVA VACANTE DE TRABAJO " + titulo.toUpperCase();
         
         String cuerpo = """
                 <html>

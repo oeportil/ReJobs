@@ -1,7 +1,9 @@
 package com.reware.rejobs.services;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +21,14 @@ public class VacanteService {
     private final VacanteRepository vacanteRepository;
     private final UsuarioRepository usuarioRepository;
     private final SubCategoriaRepository subCategoriaRepository;
+    private final CorreoService correoService;
 
     @Autowired
-    public VacanteService(VacanteRepository vacanteRepository, UsuarioRepository usuarioRepository, SubCategoriaRepository subCategoriaRepository) {
+    public VacanteService(VacanteRepository vacanteRepository, UsuarioRepository usuarioRepository, SubCategoriaRepository subCategoriaRepository, CorreoService correoService) {
         this.vacanteRepository = vacanteRepository;
         this.usuarioRepository = usuarioRepository;
         this.subCategoriaRepository = subCategoriaRepository;
+        this.correoService = correoService;
     }
 
     //Vacante por id
@@ -46,13 +50,22 @@ public class VacanteService {
         return vacanteRepository.findByLikeAndSubcategoryIdOrdered("%" + dato + "%", idSubcategoria, asc);
     }
 
-    //Crear Vacante
-    public Vacante save(String empresa, String contrato, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, int idUsuario, int idSubCategoria){
+
+    // Crear Vacante
+    public Vacante save(String empresa, String contrato, Date fechaInicio, Date fechaFin, String nombre, String ciudad, String region, String pais, String emailContacto, String telefonoContacto, String salario, String formato, String horario, String descripcion, int idUsuario, int idSubCategoria){
         Usuario reclutador = usuarioRepository.findById(idUsuario).orElse(null);
         SubCategoria subCategoria = subCategoriaRepository.findById(idSubCategoria).orElse(null);
 
         if ( empresa != null && contrato != null && nombre != null && ciudad != null && region != null && pais != null && emailContacto != null && reclutador != null && subCategoria != null){
-            Vacante vacante = new Vacante(null, contrato, empresa, fechaInicio, fechaFin, nombre, ciudad, region, pais, emailContacto, true, reclutador, subCategoria);
+            Vacante vacante = new Vacante(null, contrato, empresa, fechaInicio, fechaFin, nombre, ciudad, region, pais, emailContacto, telefonoContacto, salario, formato, horario, descripcion,  true, reclutador, subCategoria);
+            List<Usuario> usuarios = usuarioRepository.findBySubCategoryId(idSubCategoria);
+            int newid = vacanteRepository.getNextId();
+            if (usuarios == null) {
+                usuarios = new ArrayList<>();  
+            }
+            for (Usuario usuario : usuarios) {
+                correoService.enviarNotificacion(usuario.getEmail(), newid, vacante.getNombre(), vacante.getEmpresa(), subCategoria.getNombre());
+            }
             return vacanteRepository.save(vacante);
         }
         else{
@@ -60,8 +73,9 @@ public class VacanteService {
         }
     }
 
+
     //Actualizar Vacante
-    public Vacante update(Integer id, String empresa, String contrato, String nombre, String ciudad, String region, String pais, String emailContacto){
+    public Vacante update(Integer id, String empresa, String contrato, String nombre, String ciudad, String region, String pais, String emailContacto, String telefonoContacto, String salario, String formato, String horario, String descripcion){
         return vacanteRepository.findById(id).map((vacante) -> {
             if (empresa != null && !empresa.isBlank()) {
                 vacante.setEmpresa(empresa);
@@ -83,6 +97,21 @@ public class VacanteService {
             }
             if (emailContacto!= null &&!emailContacto.isBlank()) {
                 vacante.setEmailContacto(emailContacto);
+            }
+            if (telefonoContacto!= null &&!telefonoContacto.isBlank()) {
+                vacante.setTelefonoContacto(telefonoContacto);
+            }
+            if (salario!= null &&!salario.isBlank()) {
+                vacante.setSalario(salario);
+            }
+            if (formato!= null &&!formato.isBlank()) {
+                vacante.setFormato(formato);
+            }
+            if (horario!= null &&!horario.isBlank()) {
+                vacante.setHorario(horario);
+            }
+            if (descripcion!= null &&!descripcion.isBlank()) {
+                vacante.setDescripcion(descripcion);
             }
             return vacanteRepository.save(vacante);
         }).orElseThrow(() -> new RuntimeException("Vacante no encontrada"));

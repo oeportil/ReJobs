@@ -76,6 +76,11 @@ public class VacanteController {
                 request.get("region").toString(),
                 request.get("pais").toString(),
                 request.get("emailContacto").toString(),
+                (String) request.get("telefonoContacto"),
+                (String) request.get("salario"),
+                (String) request.get("formato"),
+                (String) request.get("horario"),
+                (String) request.get("descripcion"),
                 Integer.parseInt(request.get("idUsuario").toString()),
                 Integer.parseInt(request.get("idSubCategoria").toString())
             );
@@ -96,7 +101,12 @@ public class VacanteController {
                 (String) request.get("ciudad"),
                 (String) request.get("region"),
                 (String) request.get("pais"),
-                (String) request.get("emailContacto")
+                (String) request.get("emailContacto"),
+                (String) request.get("telefonoContacto"),
+                (String) request.get("salario"),
+                (String) request.get("formato"),
+                (String) request.get("horario"),
+                (String) request.get("descripcion")
             );
             return ResponseEntity.ok(Map.of("vacante", vacante));
         } catch (Exception e) {
