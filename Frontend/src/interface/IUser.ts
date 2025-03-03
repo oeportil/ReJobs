@@ -7,4 +7,5 @@ export interface IUsuario {
     pfp: string;
     curriculum: string | null;
     reclutador: boolean;
+    idUsuario?: number;
 }
