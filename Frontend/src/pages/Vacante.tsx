@@ -3,19 +3,31 @@ import { useParams } from "react-router";
 import { useVacante } from "../hooks/useVacante";
 import { IVacante } from "../interface/IVacante";
 import { formatDate } from "../utils";
+import { useCandidato } from "../hooks/useCandidato";
 
 const Vacante = () => {
   const params = useParams();
   const { getVacante } = useVacante();
+  const { existePostulacion, crearPostulacion } = useCandidato();
   const [vacante, setVacante] = useState<IVacante>();
+  const [postulado, setPostulado] = useState<boolean>(false);
+
+  const fecthData = async () => {
+    const response = await getVacante(+params.id);
+    setVacante(response);
+    const responseExist = await existePostulacion(response.id);
+    setPostulado(responseExist);
+  };
 
   useEffect(() => {
-    getVacante(+params.id).then((response) => {
-      setVacante(response);
-    });
+    fecthData();
   }, []);
 
-  console.log(params);
+  const handlePostular = async () => {
+    crearPostulacion(+params.id);
+    setPostulado(true);
+  };
+
   return (
     <div className="my-10 md:w-4/6 w-11/12 mx-auto">
       <h2 className="text-4xl font-bold text-slate-800 text-center">
@@ -140,9 +152,32 @@ const Vacante = () => {
         </p>
       )}
       <div className="flex justify-center">
-        <button className="bg-sky-800 text-white p-2 rounded-full w-11/12 max-w-md cursor-pointer hover:bg-sky-900 transition-all">
-          Postularme
-        </button>
+        {!postulado ? (
+          <button
+            onClick={handlePostular}
+            className="bg-sky-800 text-white p-2 rounded-full w-11/12 max-w-md cursor-pointer hover:bg-sky-900 transition-all"
+          >
+            Postularme
+          </button>
+        ) : (
+          <div className="bg-green-100 p-2 text-green-600 rounded-full border border-green-600 flex items-center gap-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-7"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            Te postulaste a esta Vacante Correctamente
+          </div>
+        )}
       </div>
     </div>
   );
