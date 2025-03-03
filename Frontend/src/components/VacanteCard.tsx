@@ -33,7 +33,7 @@ const VacanteCard = ({ reclutador, vacante }: Props) => {
   };
   return (
     <div className="hover:shadow-md shadow-slate-400  bg-white p-4 rounded flex md:items-center justify-between md:flex-row flex-col">
-      <Link to={`/vac/${1}`} className={`${reclutador && "w-4/6"} `}>
+      <Link to={`/vac/${vacante.id}`} className={`${reclutador && "w-4/6"} `}>
         <div>
           {/* Nombre de la vacante */}
           <h3 className="text-lg font-bold">{vacante.nombre}</h3>
@@ -123,13 +123,13 @@ const VacanteCard = ({ reclutador, vacante }: Props) => {
         {reclutador && (
           <div className="flex items-center gap-2 flex-col space-y-2 md:mt-0 mt-5 w-full">
             <Link
-              to={`/vacancy/${1}/edit`}
+              to={`/vacancy/${vacante.id}/edit`}
               className="bg-sky-900 hover:bg-sky-950 transition-colors w-full p-2 text-center text-white uppercase text-sm rounded font-bold"
             >
               Editar
             </Link>
             <Link
-              to={`/vacancy/${1}/applicants`}
+              to={`/vacancy/${vacante.id}/applicants`}
               className="bg-slate-900 hover:bg-slate-950 transition-colors w-full p-2 text-center text-white uppercase text-sm rounded font-bold"
             >
               Ver Candidatos
@@ -142,10 +142,10 @@ const VacanteCard = ({ reclutador, vacante }: Props) => {
                 Desactivar
               </button>
             ) : (
-              <div>Esta mierda esta desactivada</div>
+              <div>Desactivado</div>
             )}
             <Link
-              to={`${1}/requirements`}
+              to={`${vacante.id}/requirements`}
               className="bg-amber-700 hover:bg-amber-800 transition-colors w-full p-2 text-center text-white uppercase text-sm rounded font-bold"
             >
               Ver Requisitos

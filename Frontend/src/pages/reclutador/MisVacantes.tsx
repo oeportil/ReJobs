@@ -15,7 +15,7 @@ const MisVacantes = () => {
       refreshInterval: 500,
     }
   );
-  console.log(data);
+
   if (isLoading) return <div>Cargando...</div>;
   return (
     <div className="my-10">
@@ -49,7 +49,7 @@ const MisVacantes = () => {
         {error ? (
           <div>Error al cargar los datos</div>
         ) : (
-          <div className="grid">
+          <div className="grid space-y-2">
             {data.vacantes.map((vacante, i) => (
               <VacanteCard reclutador vacante={vacante} key={i} />
             ))}

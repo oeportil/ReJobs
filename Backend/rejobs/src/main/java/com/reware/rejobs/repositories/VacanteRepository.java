@@ -15,7 +15,6 @@ import com.reware.rejobs.models.Vacante;
 public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
 
     // Encontrar Vacantes activas de id descendente
-    @EntityGraph(attributePaths = {"subCategoria"})
     @Query("SELECT v FROM Vacante v WHERE v.activo = true ORDER BY v.id DESC")
     List<Vacante> findAllActiveOrdered();
     

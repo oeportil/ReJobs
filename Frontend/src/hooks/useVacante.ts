@@ -39,16 +39,16 @@ export const useVacante = () => {
     //listar 
     const listAllVacantes = async () => {
         try {
-            const response = await axiosClient.post(`/vacantes/all`);
+            const response = await axiosClient.get(`/vacantes/all`);
             return response.data.vacantes;
         } catch (error) {
             console.log(error);
         }
     }
 
-    const listVacantesSearch = async (search: string) => {
+    const listVacantesSearch = async (search: string, asc: boolean) => {
         try {
-            const response = await axiosClient.post(`/vacantes/buscar`, { dato: search, asc: false });
+            const response = await axiosClient.post(`/vacantes/buscar`, { dato: search, asc });
             return response.data.vacantes;
         } catch (error) {
             console.log(error);
@@ -56,9 +56,9 @@ export const useVacante = () => {
     }
 
 
-    const listVacantesSearchSubCat = async (search: string, subcat: number) => {
+    const listVacantesSearchSubCat = async (search: string, subcat: number, asc: boolean) => {
         try {
-            const response = await axiosClient.post(`/vacantes/buscar/subcategoria`, { dato: search, asc: false, idSubCategoria: subcat });
+            const response = await axiosClient.post(`/vacantes/buscar/subcategoria`, { dato: search, asc, idSubCategoria: subcat });
             return response.data.vacantes;
         } catch (error) {
             console.log(error);
