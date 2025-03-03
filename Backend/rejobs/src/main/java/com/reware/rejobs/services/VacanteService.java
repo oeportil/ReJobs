@@ -32,7 +32,7 @@ public class VacanteService {
     }
     //Todas las vacantes
     public Iterable<Vacante> getAllVacantes(){
-        return vacanteRepository.findAll();
+        return vacanteRepository.findAllActiveOrdered();
     }
     //Vacante por id
     public Vacante getById(Integer idVacante) {
