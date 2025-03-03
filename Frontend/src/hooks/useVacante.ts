@@ -19,8 +19,27 @@ export const useVacante = () => {
         }
     }
 
+    const getVacante = async (id: number) => {
+        try {
+            const response = await axiosClient.get(`/vacantes/${id}`);
+            return response.data.vacante;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const updateVacante = async (vacante: unknown, id: number) => {
+        try {
+            await axiosClient.put(`/vacantes/actualizar/${id}`, vacante);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return {
         createVacante,
-        disableVacante
+        disableVacante,
+        getVacante,
+        updateVacante
     }
 }

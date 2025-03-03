@@ -10,7 +10,6 @@ const GuardarVacante = () => {
   const navigate = useNavigate();
 
   const params = useParams();
-  console.log(params);
   const isEdit = () => params.id;
   const [categorias, setCategorias] = useState<
     { id: number; nombre: string }[]
@@ -19,7 +18,7 @@ const GuardarVacante = () => {
     { id: number; nombre: string }[]
   >([]);
   const { listCategorias, subCategoriasByID } = useCategoria();
-  const { createVacante } = useVacante();
+  const { createVacante, getVacante, updateVacante } = useVacante();
 
   const [vacante, setVacante] = useState<IVacante>({
     empresa: "",
@@ -39,14 +38,24 @@ const GuardarVacante = () => {
     descripcion: "",
   });
 
-  useEffect(() => {
-    listCategorias().then((response) => {
-      setCategorias(response.categorias);
-    });
-  }, []);
+  const fetchData = async () => {
+    const responseCat = await listCategorias();
+    setCategorias(responseCat.categorias);
+    if (isEdit()) {
+      const responseVac = await getVacante(+isEdit());
+      setVacante(responseVac);
 
+      const response = await subCategoriasByID(
+        responseVac.subCategoria.categoria?.id
+      );
+      setSubCategorias(response.subcategorias);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.currentTarget.value);
     const response = await subCategoriasByID(+e.currentTarget.value.toString());
     setSubCategorias(response.subcategorias);
   };
@@ -66,8 +75,13 @@ const GuardarVacante = () => {
       ...vacante,
       idUsuario: id,
     };
-    await createVacante(newVacante, setErrores);
-    navigate("/vacancy");
+    if (isEdit()) {
+      await updateVacante(newVacante, vacante.id);
+      navigate("/vacancy");
+    } else {
+      await createVacante(newVacante, setErrores);
+      navigate("/vacancy");
+    }
   };
 
   return (
@@ -104,41 +118,45 @@ const GuardarVacante = () => {
           />
         </div>
 
-        <div className="flex flex-col ">
-          <label
-            htmlFor="fecha_inicio"
-            className="text-gray-600 font-bold uppercase text-xs mb-1"
-          >
-            Fecha de Inicio
-          </label>
-          <input
-            type="date"
-            name="fecha_incio"
-            value={vacante.fechaInicio}
-            onChange={(e) =>
-              setVacante({ ...vacante, fechaInicio: e.currentTarget.value })
-            }
-            className="border border-gray-300 p-1 rounded bg-white w-full"
-          />
-        </div>
+        {!isEdit() && (
+          <>
+            <div className="flex flex-col ">
+              <label
+                htmlFor="fecha_inicio"
+                className="text-gray-600 font-bold uppercase text-xs mb-1"
+              >
+                Fecha de Inicio
+              </label>
+              <input
+                type="date"
+                name="fecha_incio"
+                value={vacante.fechaInicio}
+                onChange={(e) =>
+                  setVacante({ ...vacante, fechaInicio: e.currentTarget.value })
+                }
+                className="border border-gray-300 p-1 rounded bg-white w-full"
+              />
+            </div>
 
-        <div className="flex flex-col ">
-          <label
-            htmlFor="fecha_fin"
-            className="text-gray-600 font-bold uppercase text-xs mb-1"
-          >
-            Fecha de Fin
-          </label>
-          <input
-            type="date"
-            name="fecha_fin"
-            value={vacante.fechaFin}
-            onChange={(e) =>
-              setVacante({ ...vacante, fechaFin: e.currentTarget.value })
-            }
-            className="border border-gray-300 p-1 rounded bg-white w-full"
-          />
-        </div>
+            <div className="flex flex-col ">
+              <label
+                htmlFor="fecha_fin"
+                className="text-gray-600 font-bold uppercase text-xs mb-1"
+              >
+                Fecha de Fin
+              </label>
+              <input
+                type="date"
+                name="fecha_fin"
+                value={vacante.fechaFin}
+                onChange={(e) =>
+                  setVacante({ ...vacante, fechaFin: e.currentTarget.value })
+                }
+                className="border border-gray-300 p-1 rounded bg-white w-full"
+              />
+            </div>
+          </>
+        )}
 
         <div className="flex flex-col ">
           <label
@@ -354,54 +372,64 @@ const GuardarVacante = () => {
           />
         </div>
 
-        <div className="flex flex-col ">
-          <label
-            htmlFor="categoria"
-            className="text-gray-600 font-bold uppercase text-xs mb-1"
-          >
-            Categoria
-          </label>
-          <select
-            name="categoria"
-            id="categoria"
-            className="border border-gray-300 p-1 rounded bg-white"
-            onChange={handleChange}
-          >
-            <option value="" disabled>
-              --Selecciona una Categoria--
-            </option>
-            {categorias.map((categoria, i) => (
-              <option value={categoria.id} key={i}>
-                {categoria.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
+        {!isEdit() && (
+          <>
+            <div className="flex flex-col ">
+              <label
+                htmlFor="categoria"
+                className="text-gray-600 font-bold uppercase text-xs mb-1"
+              >
+                Categoria
+              </label>
+              <select
+                name="categoria"
+                id="categoria"
+                className="border border-gray-300 p-1 rounded bg-white"
+                value={isEdit() && vacante?.subCategoria?.categoria?.id}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  --Selecciona una Categoria--
+                </option>
+                {categorias.map((categoria, i) => (
+                  <option value={categoria.id} key={i}>
+                    {categoria.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div className="flex flex-col ">
-          <label
-            htmlFor="subcategoria_id"
-            className="text-gray-600 font-bold uppercase text-xs mb-1"
-          >
-            SubCategoria
-          </label>
-          <select
-            name="subcategoria_id"
-            id="subcategoria_id"
-            className="border border-gray-300 p-1 rounded bg-white"
-            value={vacante.idSubCategoria}
-            onChange={(e) =>
-              setVacante({ ...vacante, idSubCategoria: +e.currentTarget.value })
-            }
-          >
-            <option value="">-- Selecciona una SubCategoria --</option>
-            {subcategorias.map((subcategoria, i) => (
-              <option value={subcategoria.id} key={i}>
-                {subcategoria.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div className="flex flex-col ">
+              <label
+                htmlFor="subcategoria_id"
+                className="text-gray-600 font-bold uppercase text-xs mb-1"
+              >
+                SubCategoria
+              </label>
+              <select
+                name="subcategoria_id"
+                id="subcategoria_id"
+                className="border border-gray-300 p-1 rounded bg-white"
+                onChange={(e) =>
+                  setVacante({
+                    ...vacante,
+                    idSubCategoria: +e.currentTarget.value,
+                  })
+                }
+                defaultValue={isEdit() ? vacante.subCategoria?.id : ""}
+              >
+                <option value="" disabled>
+                  -- Selecciona una SubCategoria --
+                </option>
+                {subcategorias?.map((subcategoria, i) => (
+                  <option value={subcategoria.id} key={i}>
+                    {subcategoria.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
 
         <div className="flex flex-col ">
           <label
