@@ -18,7 +18,7 @@ public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
     @Query("SELECT v FROM Vacante v WHERE v.reclutador.id = :idUsuario")
     List<Vacante> findByUserId(@Param("idUsuario") Integer idUsuario);
 
-    // Nueva Query - Ordenar por fechaInicio
+    // Ordenar por fechaInicio
     @Query("SELECT v FROM Vacante v WHERE v.reclutador.id = :idUsuario ORDER BY " +
            "CASE WHEN :ascendente = true THEN v.fechaInicio END ASC, " +
            "CASE WHEN :ascendente = false THEN v.fechaInicio END DESC")
@@ -36,7 +36,7 @@ public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
            "JOIN sc.categoria c WHERE "+
            "(LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR " +
            "LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR " +
-           "LOWER(sc.nombre) LIKE LOWER(:dato) OR LOWER(c.nombre) LIKE LOWER(:dato)) " +
+           "LOWER(sc.nombre) LIKE LOWER(:dato) OR LOWER(c.nombre) LIKE LOWER(:dato)) AND v.activo = true " +
            "ORDER BY " +
            "CASE WHEN :ascendente = true THEN v.fechaInicio END ASC, " +
            "CASE WHEN :ascendente = false THEN v.fechaInicio END DESC")
@@ -48,17 +48,19 @@ public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
            "JOIN sc.categoria c WHERE "+
            "(LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR " +
            "LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR " +
-           "LOWER(sc.nombre) LIKE LOWER(:dato) OR LOWER(c.nombre) LIKE LOWER(:dato)) " +
+           "LOWER(sc.nombre) LIKE LOWER(:dato) OR LOWER(c.nombre) LIKE LOWER(:dato)) AND v.activo = true " +
            "AND sc.id = :idSubcategoria")
     List<Vacante> findByLikeAndSubcategoryId(@Param("dato") String dato, @Param("idSubcategoria") Integer idSubcategoria);
 
     // Nueva Query - Buscar por LIKE, subcategoría y ordenar por fechaInicio
     @EntityGraph(attributePaths = {"subCategoria"})
-    @Query("SELECT v FROM Vacante v WHERE " +
+    @Query("SELECT v FROM Vacante v "+ 
+           "JOIN v.subCategoria sc "+
+           "JOIN sc.categoria c WHERE "+
            "(LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR " +
            "LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR " +
-           "LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)) " +
-           "AND v.subCategoria.id = :idSubcategoria " +
+           "LOWER(sc.nombre) LIKE LOWER(:dato) OR LOWER(c.nombre) LIKE LOWER(:dato)) AND v.activo = true " +
+           "AND sc.id = :idSubcategoria " +
            "ORDER BY " +
            "CASE WHEN :ascendente = true THEN v.fechaInicio END ASC, " +
            "CASE WHEN :ascendente = false THEN v.fechaInicio END DESC")
