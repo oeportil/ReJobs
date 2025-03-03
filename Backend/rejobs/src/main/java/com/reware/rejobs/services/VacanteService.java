@@ -30,7 +30,10 @@ public class VacanteService {
         this.subCategoriaRepository = subCategoriaRepository;
         this.correoService = correoService;
     }
-
+    //Todas las vacantes
+    public Iterable<Vacante> getAllVacantes(){
+        return vacanteRepository.findAll();
+    }
     //Vacante por id
     public Vacante getById(Integer idVacante) {
         return vacanteRepository.findById(idVacante).orElse(null);

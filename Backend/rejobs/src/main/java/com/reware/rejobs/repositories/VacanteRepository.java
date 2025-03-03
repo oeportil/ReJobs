@@ -29,7 +29,7 @@ public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
     @Query("SELECT v FROM Vacante v WHERE LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR LOWER(v.ciudad) LIKE LOWER(:dato) OR LOWER(v.region) LIKE LOWER(:dato) OR LOWER(v.pais) LIKE LOWER(:dato) OR LOWER(v.subCategoria.nombre) LIKE LOWER(:dato) OR LOWER(v.subCategoria.categoria.nombre) LIKE LOWER(:dato)")
     List<Vacante> findByLike(@Param("dato") String dato);
 
-    // Nueva Query - Buscar por LIKE y ordenar por fechaInicio
+    // Buscar por LIKE y ordenar por fechaInicio
     @EntityGraph(attributePaths = {"subCategoria"})
     @Query("SELECT v FROM Vacante v WHERE " +
            "(LOWER(v.nombre) LIKE LOWER(:dato) OR LOWER(v.empresa) LIKE LOWER(:dato) OR LOWER(v.contrato) LIKE LOWER(:dato) OR " +

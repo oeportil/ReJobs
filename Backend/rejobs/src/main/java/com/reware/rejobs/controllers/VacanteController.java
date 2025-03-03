@@ -31,6 +31,11 @@ public class VacanteController {
         this.vacanteService = vacanteService;
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, Object>> getAllVacantes() {
+        Iterable<Vacante> vacantes = vacanteService.getAllVacantes();
+        return ResponseEntity.ok(Map.of("vacantes", vacantes));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getVacanteById(@PathVariable Integer id) {
         Vacante vacante = vacanteService.getById(id);
@@ -49,17 +54,33 @@ public class VacanteController {
         return ResponseEntity.ok(Map.of("vacantes", vacantes));
     }
 
-    @GetMapping("/buscar")
-    public ResponseEntity<Map<String, Object>> searchVacantes(@RequestParam String dato, @RequestParam Boolean asc) {
+    @PostMapping("/buscar")
+    public ResponseEntity<Map<String, Object>> searchVacantes(@RequestBody Map<String, Object> request) {
+        String dato = (String) request.get("dato");
+        Boolean asc = (Boolean) request.get("asc");
+
+        if (dato == null || asc == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Los campos 'dato' y 'asc' son obligatorios"));
+        }
+
         Iterable<Vacante> vacantes = vacanteService.findByLike(dato, asc);
         return ResponseEntity.ok(Map.of("vacantes", vacantes));
     }
 
-    @GetMapping("/buscar/subcategoria")
-    public ResponseEntity<Map<String, Object>> searchVacantesBySubcategoria(@RequestParam String dato, @RequestParam Integer idSubCategoria, @RequestParam Boolean asc) {
+    @PostMapping("/buscar/subcategoria")
+    public ResponseEntity<Map<String, Object>> searchVacantesBySubcategoria(@RequestBody Map<String, Object> request) {
+        String dato = (String) request.get("dato");
+        Integer idSubCategoria = (Integer) request.get("idSubCategoria");
+        Boolean asc = (Boolean) request.get("asc");
+
+        if (dato == null || idSubCategoria == null || asc == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Los campos 'dato', 'idSubCategoria' y 'asc' son obligatorios"));
+        }
+
         Iterable<Vacante> vacantes = vacanteService.findByLikeAndSubcategoryId(dato, idSubCategoria, asc);
         return ResponseEntity.ok(Map.of("vacantes", vacantes));
     }
+
 
     @PostMapping("/crear")
     public ResponseEntity<Map<String, Object>> createVacante(@RequestBody Map<String, Object> request) {
