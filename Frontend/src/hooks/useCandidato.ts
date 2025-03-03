@@ -22,8 +22,29 @@ export const useCandidato = () => {
         }
     }
 
+    const listPostulaciones = async () => {
+        const { id } = JSON.parse(localStorage.getItem('REJOBS_TOKEN'))
+        try {
+            const response = await axiosClient.get(`/candidatos/usuario/${id}`);
+            return response.data.candidaturas;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const listCandidatos = async (id: number) => {
+        try {
+            const response = await axiosClient.get(`/candidatos/vacante/${id}`);
+            return response.data.candidaturas;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return {
         existePostulacion,
-        crearPostulacion
+        crearPostulacion,
+        listPostulaciones,
+        listCandidatos
     }
 }
