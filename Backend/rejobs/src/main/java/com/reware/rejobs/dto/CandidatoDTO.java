@@ -10,10 +10,11 @@ public class CandidatoDTO {
     private Integer estado;
     private Boolean revisado;
     private String nombre;
+    private String apellido;  
     private String empresa;
     private Integer idVacante;
 
-    public CandidatoDTO(Integer id, Date fechaCan, Date fechaDisp, String nota, Integer estado, Boolean revisado, String nombre, String empresa, Integer idVacante) {
+    public CandidatoDTO(Integer id, Date fechaCan, Date fechaDisp, String nota, Integer estado, Boolean revisado, String nombre, String apellido, String empresa, Integer idVacante) {
         this.id = id;
         this.fechaCan = fechaCan;
         this.fechaDisp = fechaDisp;
@@ -21,6 +22,7 @@ public class CandidatoDTO {
         this.estado = estado;
         this.revisado = revisado;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.empresa = empresa;
         this.idVacante = idVacante;
     }
@@ -34,5 +36,6 @@ public class CandidatoDTO {
     public Boolean getRevisado() { return revisado; }
     public String getEmpresa() { return empresa; }
     public String getNombre() { return nombre; }
+    public String getApellido() { return apellido; }
     public Integer getIdVacante() { return idVacante; }
 }

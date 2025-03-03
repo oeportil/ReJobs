@@ -10,6 +10,7 @@ public class CandiVacanteDTO {
     private Integer estado;
     private Boolean revisado;
     private String nombre;
+    private String apellido;
     private String email;
     private String telefono;
     private String pfp;
@@ -18,7 +19,7 @@ public class CandiVacanteDTO {
     private String empresa;
     private Integer idVacante;
 
-    public CandiVacanteDTO(Integer id, Date fechaCan, Date fechaDisp, String nota, Integer estado, Boolean revisado, String nombre, String email, String telefono, String pfp, Integer idUsuario, String titulo, String empresa, Integer idVacante) { 
+    public CandiVacanteDTO(Integer id, Date fechaCan, Date fechaDisp, String nota, Integer estado, Boolean revisado, String nombre, String apellido, String email, String telefono, String pfp, Integer idUsuario, String titulo, String empresa, Integer idVacante) { 
         this.id = id;
         this.fechaCan = fechaCan;
         this.fechaDisp = fechaDisp;
@@ -26,6 +27,7 @@ public class CandiVacanteDTO {
         this.estado = estado;
         this.revisado = revisado;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.email = email;
         this.telefono = telefono;
         this.pfp = pfp;
@@ -43,6 +45,7 @@ public class CandiVacanteDTO {
     public Integer getEstado() { return estado; }
     public Boolean getRevisado() { return revisado; }
     public String getNombre() { return nombre; }
+    public String getApellido() { return apellido; }
     public String getEmail() { return email; }
     public String getTelefono() { return telefono; }
     public String getPfp() { return pfp; }
