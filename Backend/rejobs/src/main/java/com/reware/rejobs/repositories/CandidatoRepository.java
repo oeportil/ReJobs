@@ -3,9 +3,11 @@ package com.reware.rejobs.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.reware.rejobs.dto.CandiVacanteDTO;
 import com.reware.rejobs.dto.CandidatoDTO;
@@ -63,6 +65,8 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Integer>{
     Long countVacancyCandidatures(@Param("idVacante") Integer idVacante);
 
     //Actualizar revisados del usuario
+    @Modifying
+    @Transactional
     @Query("UPDATE Candidato c SET c.revisado = true WHERE c.usuario.id = :idUsuario")
     void updateUserCandidaturesRevisado(@Param("idUsuario") Integer idUsuario);
 
