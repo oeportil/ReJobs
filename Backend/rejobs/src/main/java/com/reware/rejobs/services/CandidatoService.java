@@ -34,6 +34,11 @@ public class CandidatoService {
         return candidatoRepository.findAll();
     }
 
+    //Buscar si un candidato existe por id y vacante usando Optional<CandiVacanteDTO> findUserVacantCandidatures
+    public Boolean existUserVacantCandidatures(Integer idUsuario, Integer idVacante){
+        return candidatoRepository.findUserVacantCandidatures(idUsuario, idVacante).isPresent();
+    }
+
     //Buscar Candidatura por ID
     public Candidato findById(Integer idCandidato){
         return candidatoRepository.findById(idCandidato).orElse(null);

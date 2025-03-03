@@ -1,6 +1,7 @@
 package com.reware.rejobs.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,15 @@ import com.reware.rejobs.models.Candidato;
 @Repository
 public interface CandidatoRepository extends JpaRepository<Candidato, Integer>{
 
+    //Buscar Candidaturas por Id de Usuario y Id de Vacante
+    @Query("SELECT new com.reware.rejobs.dto.CandiVacanteDTO( " +
+       "c.id, c.fechaCan, c.fechaDisp, c.nota, " +
+       "CASE WHEN c.contacto IS NULL THEN 0 " +
+       "     WHEN c.contacto = true THEN 1 " +
+       "     ELSE 2 END, c.revisado, c.vacante.nombre, c.vacante.empresa, c.vacante.id) " +
+       "FROM Candidato c WHERE c.usuario.id = :idUsuario AND c.vacante.id = :idVacante")
+       Optional<CandiVacanteDTO> findUserVacantCandidatures(@Param("idUsuario") Integer idUsuario, @Param("idVacante") Integer idVacante);
+       
     //Buscar Candidaturas del Usuario
     @Query("SELECT new com.reware.rejobs.dto.CandidatoDTO( " +
        "c.id, c.fechaCan, c.fechaDisp, c.nota, " +

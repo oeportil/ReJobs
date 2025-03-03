@@ -42,6 +42,13 @@ public class CandidatoController {
         return ResponseEntity.ok(response);
     }
 
+    //Buscar si existe
+    @GetMapping("/exist/{idUsuario}/{idVacante}")
+    public ResponseEntity<Map<String, Object>> existUserVacantCandidatures(@PathVariable Integer idUsuario, @PathVariable Integer idVacante) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("existe", candidatoService.existUserVacantCandidatures(idUsuario, idVacante));
+        return ResponseEntity.ok(response);
+    }
     // Obtener candidaturas de un usuario
     @GetMapping("/usuario/{idUsuario}")
     public ResponseEntity<Map<String, Object>> getUserCandidatures(@PathVariable Integer idUsuario) {
