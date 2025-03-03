@@ -36,10 +36,42 @@ export const useVacante = () => {
         }
     }
 
+    //listar 
+    const listAllVacantes = async () => {
+        try {
+            const response = await axiosClient.post(`/vacantes/all`);
+            return response.data.vacantes;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const listVacantesSearch = async (search: string) => {
+        try {
+            const response = await axiosClient.post(`/vacantes/buscar`, { dato: search, asc: false });
+            return response.data.vacantes;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    const listVacantesSearchSubCat = async (search: string, subcat: number) => {
+        try {
+            const response = await axiosClient.post(`/vacantes/buscar/subcategoria`, { dato: search, asc: false, idSubCategoria: subcat });
+            return response.data.vacantes;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return {
         createVacante,
         disableVacante,
         getVacante,
-        updateVacante
+        updateVacante,
+        listAllVacantes,
+        listVacantesSearch,
+        listVacantesSearchSubCat,
     }
 }
