@@ -48,7 +48,7 @@ public class Candidato {
         this.revisado = revisado;
     }
 
-    public Candidato(Date fechaCan, Date fechaDisp, boolean contacto, String nota, Vacante vacante, Boolean revisado, Usuario usuario) {
+    public Candidato(Date fechaCan, Date fechaDisp, Boolean contacto, String nota, Vacante vacante, Boolean revisado, Usuario usuario) {
         this.fechaCan = fechaCan;
         this.fechaDisp = fechaDisp;
         this.contacto = contacto;
