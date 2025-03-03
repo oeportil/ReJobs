@@ -28,7 +28,7 @@ const Candidatos = () => {
       </h2>
 
       <div className="mt-5">
-        {candidatos.map((candidato, i) => (
+        {candidatos?.map((candidato, i) => (
           <div
             key={i}
             className="bg-white rounded-md p-4 border border-gray-400"
