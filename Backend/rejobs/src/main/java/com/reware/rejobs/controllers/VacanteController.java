@@ -64,6 +64,7 @@ public class VacanteController {
         }
 
         Iterable<Vacante> vacantes = vacanteService.findByLike(dato, asc);
+        System.out.println(vacantes);
         return ResponseEntity.ok(Map.of("vacantes", vacantes));
     }
 
@@ -78,6 +79,8 @@ public class VacanteController {
         }
 
         Iterable<Vacante> vacantes = vacanteService.findByLikeAndSubcategoryId(dato, idSubCategoria, asc);
+        
+        System.out.println(vacantes);
         return ResponseEntity.ok(Map.of("vacantes", vacantes));
     }
 
