@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import VacanteCard from "../components/VacanteCard";
 import { useCategoria } from "../hooks/useCategoria";
+import axiosClient from "../utils/axiosClient";
+import useSWR from "swr";
+import { IVacante } from "../interface/IVacante";
 
 const Inicio = () => {
   const [categorias, setCategorias] = useState<
@@ -22,6 +25,16 @@ const Inicio = () => {
     const response = await subCategoriasByID(+e.currentTarget.value.toString());
     setSubCategorias(response.subcategorias);
   };
+
+  // const fetcher = () =>
+  //   axiosClient.get(`/vacantes/usuario`).then((r) => r.data);
+  // const { data, error, isLoading } = useSWR<{ vacantes: IVacante[] }>(
+  //   `/vacantes/usuario`,
+  //   fetcher,
+  //   {
+  //     refreshInterval: 500,
+  //   }
+  // );
 
   return (
     <>
@@ -125,10 +138,10 @@ const Inicio = () => {
 
       <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 mx-auto max-w-6xl w-11/12 my-10">
         {/* VacanteCard */}
+        {/* <VacanteCard />
         <VacanteCard />
         <VacanteCard />
-        <VacanteCard />
-        <VacanteCard />
+        <VacanteCard /> */}
         {/* VacanteCard */}
       </section>
     </>

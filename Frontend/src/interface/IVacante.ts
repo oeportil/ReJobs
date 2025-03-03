@@ -15,6 +15,21 @@ export interface IVacante {
     salario: number;
     descripcion: string;
     id?: number;
-    requisitos?: any[];
+    requisitos?: IRequisito[];
     activo?: boolean;
+    subCategoria?: {
+        id: number;
+        nombre: string;
+        categoria: {
+            id: number;
+            nombre: string;
+        }
+    }
+}
+
+export interface IRequisito {
+    id: number;
+    nombre: string;
+    descripcion: string;
+    minimo: boolean;
 }
