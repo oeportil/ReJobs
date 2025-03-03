@@ -119,20 +119,26 @@ const Vacante = () => {
       <h3 className="text-slate-700 mt-5 font-bold text-xl uppercase border-b border-slate-700">
         Requisitos
       </h3>
-      <ul className="grid space-y-4 mt-2">
-        {vacante?.requisitos.map((requisito, i) => (
-          <li
-            key={i}
-            className="last-of-type:border-none border-b border-slate-300 p-2"
-          >
-            <h4 className="font-bold">{requisito.nombre}</h4>
-            <p className="text-slate-700 text-sm">{requisito.descripcion}</p>
-            <p className="uppercase text-xs text-slate-800 font-bold">
-              {requisito.minimo ? "Obligatorio" : "Opcional"}
-            </p>
-          </li>
-        ))}
-      </ul>
+      {vacante?.requisitos.length != 0 ? (
+        <ul className="grid space-y-4 mt-2">
+          {vacante?.requisitos.map((requisito, i) => (
+            <li
+              key={i}
+              className="last-of-type:border-none border-b border-slate-300 p-2"
+            >
+              <h4 className="font-bold">{requisito.nombre}</h4>
+              <p className="text-slate-700 text-sm">{requisito.descripcion}</p>
+              <p className="uppercase text-xs text-slate-800 font-bold">
+                {requisito.minimo ? "Obligatorio" : "Opcional"}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="font-bold text-center text-slate-500 my-10 uppercase text-sm">
+          Aun no hay Requisitos Especificos para esta vacante
+        </p>
+      )}
       <div className="flex justify-center">
         <button className="bg-sky-800 text-white p-2 rounded-full w-11/12 max-w-md cursor-pointer hover:bg-sky-900 transition-all">
           Postularme
