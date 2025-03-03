@@ -3,19 +3,17 @@ import { Link, useParams } from "react-router";
 import { IUsuario } from "../../interface/IUser";
 import { useCandidato } from "../../hooks/useCandidato";
 import useSWR from "swr";
-import { useUsuario } from "../../hooks/useUsuario";
 
 const Candidatos = () => {
   const params = useParams();
   const [candidatos, setCandidatos] = useState<IUsuario[]>([]);
   const { listCandidatos } = useCandidato();
-  const { getImg } = useUsuario();
 
   const fetcher = () =>
     listCandidatos(+params.id).then((response) => setCandidatos(response));
 
   useSWR(`/candidatos/vacante/${+params.id}`, fetcher, {
-    refreshInterval: 500,
+    refreshInterval: 1000,
   });
 
   return (
@@ -35,12 +33,12 @@ const Candidatos = () => {
           >
             <div className="flex items-center gap-3 mb-4">
               {/* Imagen del Candidato */}
-              <img
-                src="/img/pato.png"
+              {/* <img
+                src={}
                 alt={`Imagen de ${candidato.nombre}`}
                 width={100}
                 height={100}
-              />
+              /> */}
               {/* Nombre del Candidato */}
               <div>
                 <p className="font-bold text-xl">
