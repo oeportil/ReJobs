@@ -2,9 +2,9 @@ import { AxiosError } from "axios";
 import axiosClient from "../utils/axiosClient";
 
 export const useCurriculum = () => {
-    const { id } = JSON.parse(localStorage.getItem('REJOBS_TOKEN') ?? '{}');
+    const { id: idUser } = JSON.parse(localStorage.getItem('REJOBS_TOKEN') ?? '{}');
 
-    const getCurriculum = async () => {
+    const getCurriculum = async (id: number = idUser) => {
         try {
             const response = await axiosClient.get(`/curriculum/usuario/${id}`);
             return response.data;

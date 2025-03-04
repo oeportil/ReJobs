@@ -6,7 +6,6 @@ import { IPostulacion } from "../interface/IPostulacion";
 import { formatDate } from "../utils";
 
 const MisPostulaciones = () => {
-  const estado = () => 0;
   const { id } = JSON.parse(localStorage.getItem("REJOBS_TOKEN"));
   const { listPostulaciones } = useCandidato();
   const [postulaciones, setPostulaciones] = useState<IPostulacion[]>([]);
@@ -33,9 +32,9 @@ const MisPostulaciones = () => {
                 key={i}
                 to={`/vac/${postulacion.idVacante}`}
                 className={`${
-                  estado() == 0
+                  postulacion.estado == 0
                     ? `bg-white border-gray-400`
-                    : estado() == 1
+                    : postulacion.estado == 1
                     ? `bg-sky-100 border-sky-800`
                     : `bg-red-100 border-red-500`
                 } rounded-md p-4 border hover:shadow shadow-gray-500`}
@@ -60,20 +59,20 @@ const MisPostulaciones = () => {
                   className={`mt-1 text-end font-bold uppercase text-xs ${
                     postulacion.estado == 0
                       ? `text-slate-700`
-                      : estado() == 1
+                      : postulacion.estado == 1
                       ? `text-sky-800`
                       : `text-red-500`
                   }`}
                 >
-                  {estado() === 0
+                  {postulacion.estado === 0
                     ? "Tu aplicacion Esta en revisión"
-                    : estado() === 1
+                    : postulacion.estado === 1
                     ? "Estas Seleccionado"
                     : "El Reclutador a Decidido No seguir con tu postulación"}
                 </p>
                 {/* Fecha de estado */}
                 <p className="text-end font-bold text-slate-700 text-xs">
-                  {postulacion.fechaDisp ?? "A concretar"}
+                  {formatDate(postulacion.fechaDisp) ?? "A concretar"}
                 </p>
               </Link>
             ))}

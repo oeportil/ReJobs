@@ -21,7 +21,7 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Integer>{
        "c.id, c.fechaCan, c.fechaDisp, c.nota, " +
        "CASE WHEN c.contacto IS NULL THEN 0 " +
        "     WHEN c.contacto = true THEN 1 " +
-       "     ELSE 2 END, c.revisado, c.vacante.nombre, c.usuario.apellido, c.vacante.empresa, c.vacante.id) " +
+       "     ELSE 2 END, c.revisado, c.vacante.nombre, c.vacante.empresa, c.vacante.id) " +
        "FROM Candidato c WHERE c.usuario.id = :idUsuario AND c.vacante.id = :idVacante")
        List<CandidatoDTO> findUserVacantCandidatures(@Param("idUsuario") Integer idUsuario, @Param("idVacante") Integer idVacante);
        

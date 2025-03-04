@@ -27,7 +27,6 @@ export const useUsuario = () => {
         }
     }
 
-
     const updateUsuario = async (usuario: unknown, setErrores: (err: string[]) => void,
         setExito: (err: string[]) => void, exito: string[]) => {
         const { id } = JSON.parse(localStorage.getItem('REJOBS_TOKEN')!);

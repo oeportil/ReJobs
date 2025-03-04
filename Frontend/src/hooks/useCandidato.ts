@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import axiosClient from "../utils/axiosClient"
 
 export const useCandidato = () => {
@@ -41,10 +42,41 @@ export const useCandidato = () => {
         }
     }
 
+    const revisarCandidato = async (revision: unknown) => {
+        try {
+            await axiosClient.put(`/candidatos/revisar`, revision);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const countPostulacion = async () => {
+        const { id } = JSON.parse(localStorage.getItem('REJOBS_TOKEN'))
+        try {
+            const response = await axiosClient.get(`/candidatos/usuario/${id}/count`);
+            return response.data.total;
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const getCandidato = async (id: number) => {
+        try {
+            const response = await axiosClient.get(`/api/usuarios/${id}`);
+            return response.data;
+        } catch (error: AxiosError | unknown) {
+            console.log(error);
+        }
+    }
+
     return {
         existePostulacion,
         crearPostulacion,
         listPostulaciones,
-        listCandidatos
+        listCandidatos,
+        revisarCandidato,
+        countPostulacion,
+        getCandidato
     }
 }

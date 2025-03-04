@@ -8,4 +8,5 @@ export interface IUsuario {
     curriculum: string | null;
     reclutador: boolean;
     idUsuario?: number;
+    estado?: number
 }
