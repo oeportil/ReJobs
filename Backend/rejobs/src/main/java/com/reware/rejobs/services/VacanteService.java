@@ -71,7 +71,7 @@ public class VacanteService {
                     correoService.enviarNotificacion(usuario.getEmail(), newid, vacante.getNombre(), vacante.getEmpresa(), subCategoria.getNombre());
                 }
             }catch (Exception e){
-                
+                e.printStackTrace();
             }
             return vacanteRepository.save(vacante);
         }
