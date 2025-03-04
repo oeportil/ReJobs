@@ -1,6 +1,7 @@
 package com.reware.rejobs.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +27,10 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
        "WHERE sc.id = :idSubCategoria")
     List<Notificacion> findBySubCategoryId(@Param("idSubCategoria") Integer idSubCategoria);
 
-
+    //Buscar Notificaciones por Usuario y Categoria
+    @Query("SELECT n FROM Notificacion n " +
+       "WHERE n.usuario.id = :idUsuario AND n.categoria.id = :idCategoria")
+       Optional<Notificacion> findByUsuarioAndCategoria(@Param("idUsuario") Integer idUsuario, @Param("idCategoria") Integer idCategoria);
 
 }
 
