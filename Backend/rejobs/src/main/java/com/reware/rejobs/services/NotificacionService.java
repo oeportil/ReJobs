@@ -34,6 +34,10 @@ public class NotificacionService {
         if (usuario == null) {
             throw new RuntimeException("Usuario no encontrado");
         }
+        //Verificar que no esté repetido
+        if (notificacionRepository.findByUsuarioAndCategoria(idUsuario, idCategoria).isPresent()) {
+            throw new RuntimeException("Notificación repetida para el usuario y categoría");
+        }
         //Crear la notificación 
         Notificacion nuevaNotificacion = new Notificacion(usuario, categoria);
         return notificacionRepository.save(nuevaNotificacion);
