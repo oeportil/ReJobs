@@ -75,7 +75,7 @@ public class CorreoService {
                         </span> </p>
                         <p class='description'>De """ + empresa + """
                         </p>
-                        <a href=' http://localhost:5173/vacancy/""" + id+"""
+                        <a href=' http://localhost:5173/vac/""" + id+"""
                         '>Saber más</a>
                     </div>
                 </body>
