@@ -85,7 +85,6 @@ export const useUsuario = () => {
         updateUsuario,
         updatePassword,
         updateImg,
-        getImg,
-        getImgEspc
+        getImg
     }
 }
